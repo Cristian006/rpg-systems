@@ -12,6 +12,7 @@ namespace Systems.Utility.Database
         [SerializeField]
         private string _name;
 
+    #region GETTERS AND SETTERS
         public int ID
         {
             get
@@ -37,6 +38,7 @@ namespace Systems.Utility.Database
                 _name = value;
             }
         }
+        #endregion
 
         public BaseDatabaseAsset()
         {

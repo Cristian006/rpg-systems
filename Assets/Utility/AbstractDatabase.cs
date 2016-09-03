@@ -90,6 +90,32 @@ namespace Systems.Utility.Database
             return Objects.Contains(t);
         }
 
+        public bool Contains(int id)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                var asset = GetAtIndex(i);
+                if (asset.ID == id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool Contains(string name)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                var asset = GetAtIndex(i);
+                if (asset.Name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public int Count
         {
             get { return Objects.Count; }
@@ -117,6 +143,19 @@ namespace Systems.Utility.Database
             {
                 var asset = GetAtIndex(i);
                 if(asset.ID == id)
+                {
+                    return (T)GetAtIndex(i);
+                }
+            }
+            return default(T);
+        }
+
+        public T GetByName(string name)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                var asset = GetAtIndex(i);
+                if (asset.Name == name)
                 {
                     return (T)GetAtIndex(i);
                 }
