@@ -18,7 +18,13 @@ namespace Systems.ItemSystem
         [SerializeField]
         private bool _stackable;
         [SerializeField]
+        private int _stackSize;
+        [SerializeField]
         private Sprite _icon;
+        [SerializeField]
+        private int _level;
+        [SerializeField]
+        private int _cost;
 
         #region GETTERS AND SETTERS
         public Sprite Icon
@@ -31,6 +37,24 @@ namespace Systems.ItemSystem
             {
                 _icon = value;
             }
+        }
+
+        public int Level
+        {
+            get { return _level; }
+            set { _level = value; }
+        }
+
+        public int Cost
+        {
+            get { return _cost; }
+            set { _cost = value; }
+        }
+
+        public int StackSize
+        {
+            get { return _stackSize; }
+            set { _stackSize = value; }
         }
 
         public ItemType IType
@@ -86,7 +110,7 @@ namespace Systems.ItemSystem
             Description = String.Empty;
         }
 
-        public ItemAsset(int id) : base ()
+        public ItemAsset(int id) : base (id)
         {
             IType = ItemType.None;
             Weight = 0;

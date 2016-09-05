@@ -63,7 +63,7 @@ namespace Systems.ItemSystem
         }
         #endregion
 
-        public Weapon(WeaponAsset wa)
+        public Weapon(WeaponAsset wa) : base((ItemAsset)wa)
         {
             this.Durability = wa.Durability;
             this.WeaponType = wa.WType;

@@ -9,17 +9,27 @@ namespace Systems.ItemSystem
     public class Item
     {
         private int _id;
-        private ItemType _type;
         private string _name;
+        private ItemType _iType;
         private string _description;
         private int _weight;
         private bool _stackable;
+        private int _stackSize;
+        private Sprite _icon;
+        private int _level;
+        private int _cost;
 
         #region GETTERS AND SETTERS
         public int ID
         {
             get { return _id; }
             set { _id = value; }
+        }
+
+        public int Level
+        {
+            get { return _level; }
+            set { _level = value; }
         }
 
         public string Name
@@ -34,16 +44,16 @@ namespace Systems.ItemSystem
             set { _stackable = value; }
         }
 
-        public ItemType Type
+        public ItemType IType
         {
             get
             {
-                return _type;
+                return _iType;
             }
 
             set
             {
-                _type = value;
+                _iType = value;
             }
         }
 
@@ -72,6 +82,45 @@ namespace Systems.ItemSystem
                 _weight = value;
             }
         }
+
+        public int Cost
+        {
+            get
+            {
+                return _cost;
+            }
+
+            set
+            {
+                _cost = value;
+            }
+        }
+
+        public Sprite Icon
+        {
+            get
+            {
+                return _icon;
+            }
+
+            set
+            {
+                _icon = value;
+            }
+        }
+
+        public int StackSize
+        {
+            get
+            {
+                return _stackSize;
+            }
+
+            set
+            {
+                _stackSize = value;
+            }
+        }
         #endregion
 
         #region CONSTRUCTORS
@@ -80,13 +129,18 @@ namespace Systems.ItemSystem
 
         }
 
-        public Item(Item item)
+        public Item(ItemAsset ia)
         {
-            ID = item.ID;
-            Name = item.Name;
-            Type = item.Type;
-            Weight = item.Weight;
-            Description = item.Description;
+            ID = ia.ID;
+            Name = ia.Name;
+            IType = ia.IType;
+            Weight = ia.Weight;
+            Description = ia.Description;
+            Stackable = ia.Stackable;
+            StackSize = ia.StackSize;
+            Icon = ia.Icon;
+            Level = ia.Level;
+            Cost = ia.Cost;
         }
         #endregion
     }

@@ -34,17 +34,17 @@ namespace Systems.ItemSystem
             return Instance.Contains(id);
         }
 
-        static public ItemAsset GetAt(int index)
+        static public ConsumableAsset GetAt(int index)
         {
             return Instance.GetAtIndex(index);
         }
 
-        static public ItemAsset GetAsset(int id)
+        static public ConsumableAsset GetAsset(int id)
         {
             return Instance.GetByID(id);
         }
 
-        static public ItemAsset GetAsset(string name)
+        static public ConsumableAsset GetAsset(string name)
         {
             return Instance.GetByName(name);
         }
@@ -54,9 +54,9 @@ namespace Systems.ItemSystem
             return Instance.Count;
         }
 
-        static public Item GetItemFromAsset(ItemAsset itemAsset)
+        static public Consumable GetItemFromAsset(ConsumableAsset itemAsset)
         {
-            return null;//new Item(itemAsset);
+            return new Consumable(itemAsset);
         }
     }
 }

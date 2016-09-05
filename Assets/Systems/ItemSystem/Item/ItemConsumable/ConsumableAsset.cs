@@ -8,6 +8,14 @@ namespace Systems.ItemSystem
     {
         [SerializeField]
         private StatType statToEffect;
+        [SerializeField]
+        private int _effectAmount;
+
+        public int EffectAmount
+        {
+            get { return _effectAmount; }
+            set { _effectAmount = value; }
+        }
 
         public StatType StatToEffect
         {
