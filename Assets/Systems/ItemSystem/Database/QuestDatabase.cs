@@ -54,9 +54,9 @@ namespace Systems.ItemSystem
             return Instance.Count;
         }
 
-        static public QuestItem GetItemFromAsset(QuestAsset qa)
+        static public QuestItem GetItemFromAsset(QuestAsset questAsset)
         {
-            return new QuestItem(qa);
+            return new QuestItem(questAsset);
         }
     }
 }

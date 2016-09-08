@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Systems.ItemSystem
 {
+    [System.Serializable]
     public class QuestAsset : ItemAsset
     {
         public QuestAsset() : base()

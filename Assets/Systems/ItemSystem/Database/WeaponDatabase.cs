@@ -6,7 +6,7 @@ namespace Systems.ItemSystem
 {
     public class WeaponDatabase : BaseDatabase<WeaponAsset>
     {
-        const string DatabasePath = @"Resources/Systems/ItemSystem/Database/";
+        const string DatabasePath = @"Resources/Systems/ItemSystem/Databases/";
         const string DatabaseName = @"WeaponDatabase.asset";
 
         private static WeaponDatabase _instance = null;

@@ -19,6 +19,7 @@ namespace Systems.ItemSystem
 
         private int _currentDurablity;
 
+        #region GETTERS AND SETTERS
         public int Durability
         {
             get
@@ -96,6 +97,7 @@ namespace Systems.ItemSystem
                 _weaponDamage = value;
             }
         }
+        #endregion
 
         public WeaponAsset() : base (){
             this.Durability = 0;

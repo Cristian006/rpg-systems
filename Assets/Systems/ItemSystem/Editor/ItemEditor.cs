@@ -322,7 +322,7 @@ namespace Systems.ItemSystem.Editor
                         GUILayout.EndVertical();
                         if (EditorGUI.EndChangeCheck())
                         {
-                            EditorUtility.SetDirty(WeaponDatabase.Instance);
+                            EditorUtility.SetDirty(ConsumableDatabase.Instance);
                         }
                     }
                 }
@@ -357,9 +357,9 @@ namespace Systems.ItemSystem.Editor
                         }
                     }
 
-                    if (GUILayout.Button("x", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Consumable Item", "Are you sure you want to delete " + asset.Name + " Quest Item?", "Delete", "Cancel"))
+                    if (GUILayout.Button("x", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Quest Item", "Are you sure you want to delete " + asset.Name + " Consumable?", "Delete", "Cancel"))
                     {
-                        ConsumableDatabase.Instance.RemoveAt(i);
+                        QuestDatabase.Instance.RemoveAt(i);
                     }
 
                     GUILayout.EndHorizontal();
@@ -422,7 +422,7 @@ namespace Systems.ItemSystem.Editor
                         asset.Weight = EditorGUILayout.IntSlider(asset.Weight, 0, 99);
                         GUILayout.EndHorizontal();
 
-                        GUILayout.Label("Consumable Variables", EditorStyles.boldLabel);
+                        GUILayout.Label("QuestItem Variables", EditorStyles.boldLabel);
                         
                         GUILayout.EndVertical();
 
@@ -431,7 +431,7 @@ namespace Systems.ItemSystem.Editor
                         GUILayout.EndVertical();
                         if (EditorGUI.EndChangeCheck())
                         {
-                            EditorUtility.SetDirty(WeaponDatabase.Instance);
+                            EditorUtility.SetDirty(QuestDatabase.Instance);
                         }
                     }
                 }
