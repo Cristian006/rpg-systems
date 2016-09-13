@@ -9,6 +9,7 @@ public class UIItem : MonoBehaviour
     private Item _myItem;
     private InventoryTest iT;
 
+    public Image i;
     public Text n;
     public Text desc;
 
@@ -36,6 +37,7 @@ public class UIItem : MonoBehaviour
 	
     void LoadItem()
     {
+        i.sprite = MyItem.Icon;
         n.text = string.Format("{0} Lv. {1}", MyItem.Name, MyItem.Level);
         desc.text = string.Format("Cost: ${0}\nDescription: {1}", MyItem.Cost, MyItem.Description);
     }
