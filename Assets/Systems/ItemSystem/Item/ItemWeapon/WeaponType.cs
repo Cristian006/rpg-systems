@@ -7,9 +7,8 @@ namespace Systems.ItemSystem
 {
     public enum WeaponType
     {
-        Sword,
-        Shield,
-        Bow,
+        Primary,
+        Secondary,
         Throwable,
         None
     }

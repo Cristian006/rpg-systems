@@ -4,42 +4,39 @@ using System;
 using System.Collections.Generic;
 using Systems.ItemSystem;
 using Systems.StatSystem;
+using Systems.InventorySystem.Utility;
 
+//TODO: Event handlers for weapon change
 namespace Systems.InventorySystem
 {
     public class InventoryManager : MonoBehaviour
     {
         [SerializeField]
         private Entity entity;
+        [SerializeField]
+        private Inventory _inventory;
 
-        private InventoryList<Weapon> _weapons;
-        private InventoryList<Consumable> _consumables;
-        private InventoryList<QuestItem> _questItems;
-        
-        public InventoryList<T> Inventory<T>() where T : Item
+        private int _primaryIndex = -1;
+        private int _secondaryIndex = -1;
+        private int _tertiaryIndex = -1;
+
+        #region GETTERS AND SETTERS
+        private Inventory inventory
         {
-            Type t = typeof(T);
-
-            if(t == typeof(Weapon))
+            get
             {
-                return _weapons as InventoryList<T>;
+                if(_inventory == null)
+                {
+                    _inventory = new Inventory();
+                }
+                return _inventory;
             }
-            else if(t == typeof(Consumable))
+            set
             {
-                return _consumables as InventoryList<T>;
-            }
-            else if(t == typeof(QuestItem))
-            {
-                return _questItems as InventoryList<T>;
-            }
-            else
-            {
-                Debug.Log("No Inventory List matches that type");
-                return null;
+                _inventory = value;
             }
         }
 
-        #region GETTERS AND SETTERS
         public Entity MyEntity
         {
             get
@@ -52,20 +49,75 @@ namespace Systems.InventorySystem
             }
         }
 
-        public InventoryList<Weapon> Weapons
+        public int PrimaryIndex
         {
             get
             {
-                if(_weapons == null)
-                {
-                    _weapons = new InventoryList<Weapon>();
-                }
-                return _weapons;
+                return _primaryIndex;
+            }
+            set
+            {
+                _primaryIndex = value;
+            }
+        }
+
+        public int SecondaryIndex
+        {
+            get
+            {
+                return _secondaryIndex;
             }
 
             set
             {
-                _weapons = value;
+                _secondaryIndex = value;
+            }
+        }
+
+        public int TertiaryIndex
+        {
+            get
+            {
+                return _tertiaryIndex;
+            }
+
+            set
+            {
+                _tertiaryIndex = value;
+            }
+        }
+        #endregion
+
+        #region PROPERTIES
+        public Weapon Primary
+        {
+            get
+            {
+                return _primaryIndex >= 0 ? inventory.Objects<Weapon>().GetAt(_primaryIndex) : null;
+            }
+        }
+
+        public Weapon Secondary
+        {
+            get
+            {
+                return _secondaryIndex >= 0 ? inventory.Objects<Weapon>().GetAt(_secondaryIndex) : null;
+            }
+        }
+
+        public QuestItem Tertiary
+        {
+            get
+            {
+                return _tertiaryIndex >= 0 ? inventory.Objects<QuestItem>().GetAt(_tertiaryIndex) : null;
+            }
+        }
+
+        public InventoryList<Weapon> Weapons
+        {
+            get
+            {
+                return inventory.Weapons;
             }
         }
 
@@ -73,16 +125,7 @@ namespace Systems.InventorySystem
         {
             get
             {
-                if(_consumables == null)
-                {
-                    _consumables = new InventoryList<Consumable>();
-                }
-                return _consumables;
-            }
-
-            set
-            {
-                _consumables = value;
+                return inventory.Consumables;
             }
         }
 
@@ -90,20 +133,24 @@ namespace Systems.InventorySystem
         {
             get
             {
-                if(_questItems == null)
-                {
-                    _questItems = new InventoryList<QuestItem>();
-                }
-                return _questItems;
-            }
-            set
-            {
-                _questItems = value;
+                return inventory.QuestItems;
             }
         }
-        #endregion
 
-        #region PROPERTIES
+        /// <summary>
+        /// The inventory's current weight
+        /// </summary>
+        public int CurrentWeight
+        {
+            get
+            {
+                return inventory.Weight;
+            }
+        }
+
+        /// <summary>
+        /// The inventory's Max Weight
+        /// </summary>
         public int MaxWeight
         {
             get
@@ -112,37 +159,39 @@ namespace Systems.InventorySystem
             }
         }
 
-        public int Weight
-        {
-            get
-            {
-                return (Weapons.Weight + Consumables.Weight + QuestItems.Weight);
-            }
-        }
-
+        /// <summary>
+        /// The inventory's available weight
+        /// </summary>
         public int AvailableWeight
         {
             get
             {
-                return (MaxWeight - Weight);
+                return (MaxWeight - CurrentWeight);
             }
         }
 
-        public int Count
+        /// <summary>
+        /// The respective inventory list count
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public int Count<T>() where T : Item
         {
-            get
-            {
-                return (Weapons.Count + Consumables.Count + QuestItems.Count);
-            }
+            return inventory.Objects<T>().Count;
         }
         #endregion
 
-        #region METHODS
+        #region INVENTORY METHODS
+        /// <summary>
+        /// Add Item to inventory if there's enough room.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
         public void Add<T>(T item) where T : Item
         {
             if(item.Weight <= AvailableWeight)
             {
-                Inventory<T>().Add(item);
+                inventory.Objects<T>().Add(item);
             }
             else
             {
@@ -150,49 +199,107 @@ namespace Systems.InventorySystem
             }
         }
 
+        /// <summary>
+        /// Remove Item from the inventory
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
         public void Remove<T>(T item) where T : Item
         {
-            Inventory<T>().Remove(item);
+            inventory.Objects<T>().Remove(item);
         }
 
+        /// <summary>
+        /// Remove Item from the inventory at that index
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index"></param>
         public void RemoveAt<T>(int index) where T : Item
         {
-            Inventory<T>().RemoveAt(index);
+            inventory.Objects<T>().RemoveAt(index);
         }
 
+        /// <summary>
+        /// Replace the Item at that index if the difference in weight of the two items fit in the Inventory
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index"></param>
+        /// <param name="item"></param>
         public void Replace<T>(int index, T item) where T : Item
         {
-            Inventory<T>().Replace(index, item);
+            int differnceInWeight = inventory.Objects<T>().GetAt(index).Weight - item.Weight;
+
+            if ((inventory.Weight - differnceInWeight) <= MaxWeight)
+            {
+                inventory.Objects<T>().Replace(index, item);
+            }
+            else
+            {
+                Debug.Log("CANNOT REPLACE ITEM, TOO MUCH WEIGHT");
+            }
         }
 
         public bool Contains<T>(T item) where T : Item
         {
-            return Inventory<T>().Contains(item);
+            return inventory.Objects<T>().Contains(item);
         }
 
         public bool Contains<T>(int id) where T : Item
         {
-            return Inventory<T>().Contains(id);
+            return inventory.Objects<T>().Contains(id);
         }
 
         public bool Contains<T>(string name) where T : Item
         {
-            return Inventory<T>().Contains(name);
+            return inventory.Objects<T>().Contains(name);
         }
 
         public T GetAt<T>(int index) where T : Item
         {
-            return Inventory<T>().GetAt(index);
+            return inventory.Objects<T>().GetAt(index);
         }
 
         public T GetBy<T>(string name) where T : Item
         {
-            return Inventory<T>().GetBy(name);
+            return inventory.Objects<T>().GetBy(name);
         }
 
         public T GetBy<T>(int id) where T : Item
         {
-            return Inventory<T>().GetBy(id);
+            return inventory.Objects<T>().GetBy(id);
+        }
+        #endregion
+
+        #region EQUIPPING METHODS
+        /// <summary>
+        /// Equip an Item
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <param name="index"></param>
+        public void Equip<T>(T item, int index) where T : Item
+        {
+            Type t = typeof(T);
+
+            if(t == typeof(Weapon))
+            {
+                if((item as Weapon).WeaponType == WeaponType.Primary)
+                {
+                    PrimaryIndex = index;
+                }
+                else
+                {
+                    SecondaryIndex = index;
+                }
+            }
+            else if (t == typeof(QuestItem))
+            {
+                TertiaryIndex = index;
+            }
+            else
+            {
+                Debug.Log("CANNOT EQUIP THIS TYPE OF ITEM");
+            }
         }
         #endregion
     }

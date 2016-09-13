@@ -1,27 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using Systems.ItemSystem;
 using Systems.InventorySystem;
 
-public class InventoryTest : MonoBehaviour {
-
+public class InventoryTest : MonoBehaviour
+{
     [SerializeField]
     private Entity sceneEntity;
     private InventoryManager im;
     public Text InventoryInfoText;
-    public Text InventoryText;
+    public static InventoryTest instance = null;
+    public Button uiItemPrefab;
+    public GameObject scrollViewContent;
+    public List<Button> buttons = new List<Button>();
 
-    public Button[] buttons;
-    public enum Selected
-    {
-        weapons,
-        consumables,
-        quest
-    }
-
-    public Selected selected = new Selected();
-
+    public ItemType selected = new ItemType();
+    bool needToUpdateList = false;
+    
     public Entity SceneEntity
     {
         get
@@ -47,13 +44,26 @@ public class InventoryTest : MonoBehaviour {
         }
     }
 
+    void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
 	// Use this for initialization
 	void Start () {
-        selected = Selected.weapons;
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate ()
+        selected = ItemType.Weapon;
+        needToUpdateList = true;
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
     {
         UpdateInventoryText();
         UpdateInventory();
@@ -61,7 +71,8 @@ public class InventoryTest : MonoBehaviour {
 
     public void SelectItem(int item)
     {
-        selected = (Selected)item;
+        selected = (ItemType)item;
+        needToUpdateList = true;
     }
 
     public void AddItem(int itemType)
@@ -70,24 +81,61 @@ public class InventoryTest : MonoBehaviour {
         switch (i)
         {
             case ItemType.Weapon:
-                if (WeaponDatabase.Instance.Count > 0)
+                if (WeaponDatabase.Instance.Count >= 0)
                 {
-                    int rand = Mathf.FloorToInt(Random.Range(0, (WeaponDatabase.Instance.Count))-1);
-                    IM.Add<Weapon>(WeaponDatabase.GetItemFromAsset(WeaponDatabase.Instance.GetAtIndex(0)));
+                    int rand = Mathf.FloorToInt(Random.Range(0, (WeaponDatabase.Instance.Count)));
+                    IM.Add<Weapon>(WeaponDatabase.GetItemFromAsset(WeaponDatabase.Instance.GetAtIndex(rand)));
+                    needToUpdateList = true;
                 }
                 break;
             case ItemType.Consumable:
-                if (ConsumableDatabase.Instance.Count > 0)
+                if (ConsumableDatabase.Instance.Count >= 0)
                 {
-                    int rand = Mathf.FloorToInt(Random.Range(0, (QuestDatabase.Instance.Count))-1);
-                    IM.Add<Consumable>(ConsumableDatabase.GetItemFromAsset(ConsumableDatabase.Instance.GetAtIndex(0)));
+                    int rand = Mathf.FloorToInt(Random.Range(0, (QuestDatabase.Instance.Count)));
+                    IM.Add<Consumable>(ConsumableDatabase.GetItemFromAsset(ConsumableDatabase.Instance.GetAtIndex(rand)));
+                    needToUpdateList = true;
                 }
                 break;
             case ItemType.Quest:
-                if(QuestDatabase.Instance.Count > 0)
+                if(QuestDatabase.Instance.Count >= 0)
                 {
-                    int rand = Mathf.FloorToInt(Random.Range(0, (QuestDatabase.Instance.Count))-1);
-                    IM.Add<QuestItem>(QuestDatabase.GetItemFromAsset(QuestDatabase.Instance.GetAtIndex(0)));
+                    int rand = Mathf.FloorToInt(Random.Range(0, (QuestDatabase.Instance.Count-1)));
+                    IM.Add<QuestItem>(QuestDatabase.GetItemFromAsset(QuestDatabase.Instance.GetAtIndex(rand)));
+                    needToUpdateList = true;
+                }
+                break;
+        }
+    }
+
+
+    public void RemoveItem(int itemType)
+    {
+        
+        ItemType i = (ItemType)itemType;
+        switch (i)
+        {
+            case ItemType.Weapon:
+                if (IM.Count<Weapon>() > 0)
+                {
+                    int rand = Mathf.FloorToInt(Random.Range(0, (IM.Count<Weapon>() - 1)));
+                    IM.RemoveAt<Weapon>(rand);
+                    needToUpdateList = true;
+                }
+                break;
+            case ItemType.Consumable:
+                if (IM.Count<Consumable>() > 0)
+                {
+                    int rand = Mathf.FloorToInt(Random.Range(0, (IM.Count<Consumable>() - 1)));
+                    IM.RemoveAt<Consumable>(rand);
+                    needToUpdateList = true;
+                }
+                break;
+            case ItemType.Quest:
+                if (IM.Count<QuestItem>() > 0)
+                {
+                    int rand = Mathf.FloorToInt(Random.Range(0, (IM.Count<QuestItem>() - 1)));
+                    IM.RemoveAt<QuestItem>(rand);
+                    needToUpdateList = true;
                 }
                 break;
         }
@@ -95,42 +143,169 @@ public class InventoryTest : MonoBehaviour {
 
     public void UpdateInventoryText()
     {
-        InventoryInfoText.text = "Weight: " + IM.Weight + " / " + IM.MaxWeight + "\nWeapons: " + IM.Weapons.Count + "\nConsumables: " + IM.Consumables.Count + "\nQuestItems: " + IM.QuestItems.Count;
+        InventoryInfoText.text = "Weight: " + IM.CurrentWeight + " / " + IM.MaxWeight + "\nWeapons: " + IM.Count<Weapon>() + "\nConsumables: " + IM.Count<Consumable>() + "\nQuestItems: " + IM.Count<QuestItem>();
     }
 
     public void UpdateInventory()
     {
-        switch (selected)
+        if (needToUpdateList)
         {
-            case Selected.weapons:
-                InventoryText.text = "<b>Weapons</b>\n--------------------------------\n";
-                foreach(var i in IM.Inventory<Weapon>().Objects)
-                {
-                    InventoryText.text += "Name: " + i.Name + "\nWeight: " + i.Weight + "\n--------------------------------\n";
-                }
-
-                break;
-            case Selected.consumables:
-
-                InventoryText.text = "<b>Consumables</b>\n--------------------------------\n";
-                foreach (var i in IM.Inventory<Consumable>().Objects)
-                {
-                    InventoryText.text += "Name: " + i.Name + "\nWeight: " + i.Weight + "\n--------------------------------\n";
-                }
-
-                break;
-            case Selected.quest:
-
-                InventoryText.text = "<b>Quest Items</b>\n--------------------------------\n";
-                foreach (var i in IM.Inventory<QuestItem>().Objects)
-                {
-                    InventoryText.text += "Name: " + i.Name + "\nWeight: " + i.Weight + "\n--------------------------------\n";
-                }
-
-                break;
-            default:
-                InventoryText.text = "Select an item type from the buttons above";
-                break;
+            needToUpdateList = false;
+            switch (selected)
+            {
+                case ItemType.Weapon:
+                    int diff = buttons.Count - IM.Count<Weapon>();
+                    if (diff == 0)
+                    {
+                        for (int i = 0; i < buttons.Count; i++)
+                        {
+                            buttons[i].gameObject.SetActive(true);
+                            buttons[i].GetComponent<UIItem>().MyItem = IM.Weapons.Objects[i];
+                        }
+                    }
+                    else if (diff > 0)
+                    {
+                        for (int i = 0; i < buttons.Count; i++)
+                        {
+                            if (i < diff)
+                            {
+                                buttons[i].gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                buttons[i].gameObject.SetActive(true);
+                                buttons[i].GetComponent<UIItem>().MyItem = IM.Weapons.Objects[i - diff];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < (buttons.Count + Mathf.Abs(diff)); i++)
+                        {
+                            if (i < buttons.Count)
+                            {
+                                buttons[i].gameObject.SetActive(true);
+                                buttons[i].GetComponent<UIItem>().MyItem = IM.Weapons.Objects[i];
+                            }
+                            else
+                            {
+                                if(i < IM.Count<Weapon>())
+                                {
+                                    Button b = Instantiate(uiItemPrefab);
+                                    buttons.Add(b);
+                                    b.gameObject.SetActive(false);
+                                    b.GetComponent<RectTransform>().SetParent(scrollViewContent.transform);
+                                    b.transform.localScale = Vector3.one;
+                                    b.gameObject.SetActive(true);
+                                    b.GetComponent<UIItem>().MyItem = IM.Weapons.Objects[i];
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case ItemType.Consumable:
+                    diff = buttons.Count - IM.Count<Consumable>();
+                    if (diff == 0)
+                    {
+                        for (int i = 0; i < buttons.Count; i++)
+                        {
+                            buttons[i].gameObject.SetActive(true);
+                            buttons[i].GetComponent<UIItem>().MyItem = IM.Consumables.Objects[i];
+                        }
+                    }
+                    else if (diff > 0)
+                    {
+                        for (int i = 0; i < buttons.Count; i++)
+                        {
+                            if (i < diff)
+                            {
+                                buttons[i].gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                buttons[i].gameObject.SetActive(true);
+                                buttons[i].GetComponent<UIItem>().MyItem = IM.Consumables.Objects[i-diff];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < (buttons.Count + Mathf.Abs(diff)); i++)
+                        {
+                            if (i < buttons.Count)
+                            {
+                                buttons[i].gameObject.SetActive(true);
+                                buttons[i].GetComponent<UIItem>().MyItem = IM.Consumables.Objects[i];
+                            }
+                            else
+                            {
+                                if (i < IM.Count<Consumable>())
+                                {
+                                    Button b = Instantiate(uiItemPrefab);
+                                    buttons.Add(b);
+                                    b.gameObject.SetActive(false);
+                                    b.GetComponent<RectTransform>().SetParent(scrollViewContent.transform);
+                                    b.transform.localScale = Vector3.one;
+                                    b.gameObject.SetActive(true);
+                                    b.GetComponent<UIItem>().MyItem = IM.Consumables.Objects[i];
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case ItemType.Quest:
+                    diff = buttons.Count - IM.Count<QuestItem>();
+                    if (diff == 0)
+                    {
+                        for (int i = 0; i < buttons.Count; i++)
+                        {
+                            buttons[i].gameObject.SetActive(true);
+                            buttons[i].GetComponent<UIItem>().MyItem = IM.QuestItems.Objects[i];
+                        }
+                    }
+                    else if (diff > 0)
+                    {
+                        for (int i = 0; i < buttons.Count; i++)
+                        {
+                            if (i < diff)
+                            {
+                                buttons[i].gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                buttons[i].gameObject.SetActive(true);
+                                buttons[i].GetComponent<UIItem>().MyItem = IM.QuestItems.Objects[i - diff];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < (buttons.Count + Mathf.Abs(diff)); i++)
+                        {
+                            if (i < buttons.Count)
+                            {
+                                buttons[i].gameObject.SetActive(true);
+                                buttons[i].GetComponent<UIItem>().MyItem = IM.QuestItems.Objects[i];
+                            }
+                            else
+                            {
+                                if (i < IM.Count<QuestItem>())
+                                {
+                                    Button b = Instantiate(uiItemPrefab);
+                                    buttons.Add(b);
+                                    b.gameObject.SetActive(false);
+                                    b.GetComponent<RectTransform>().SetParent(scrollViewContent.transform);
+                                    b.transform.localScale = Vector3.one;
+                                    b.gameObject.SetActive(true);
+                                    b.GetComponent<UIItem>().MyItem = IM.QuestItems.Objects[i];
+                                }
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
