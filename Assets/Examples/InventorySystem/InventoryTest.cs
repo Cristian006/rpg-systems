@@ -18,6 +18,9 @@ public class InventoryTest : MonoBehaviour
 
     public ItemType selected = new ItemType();
     bool needToUpdateList = false;
+    public bool updateEquipped = false;
+
+    public Button[] equipped = new Button[3];
     
     public Entity SceneEntity
     {
@@ -67,6 +70,7 @@ public class InventoryTest : MonoBehaviour
     {
         UpdateInventoryText();
         UpdateInventory();
+        UpdateEquipped();
 	}
 
     public void SelectItem(int item)
@@ -306,6 +310,16 @@ public class InventoryTest : MonoBehaviour
                 default:
                     break;
             }
+        }
+    }
+
+    void UpdateEquipped()
+    {
+        if (updateEquipped)
+        {
+            equipped[0].GetComponent<UIItem>().MyItem = IM.Primary;
+            equipped[1].GetComponent<UIItem>().MyItem = IM.Secondary;
+            equipped[2].GetComponent<UIItem>().MyItem = IM.Tertiary;
         }
     }
 }

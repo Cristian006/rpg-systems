@@ -271,34 +271,81 @@ namespace Systems.InventorySystem
         #endregion
 
         #region EQUIPPING METHODS
+        public bool isEquipped(Item item)
+        {
+            switch (item.IType)
+            {
+                case ItemType.Weapon:
+                    if((item as Weapon).WeaponType == WeaponType.Primary)
+                    {
+                        return PrimaryIndex == Weapons.Objects.IndexOf((Weapon)item);
+                    }
+                    else
+                    {
+                        return SecondaryIndex == Weapons.Objects.IndexOf((Weapon)item);
+                    }
+                case ItemType.Consumable:
+                    return false;
+                case ItemType.Quest:
+                    return TertiaryIndex == QuestItems.Objects.IndexOf((QuestItem)item);
+                default:
+                    return false;
+            }
+        }
+
         /// <summary>
         /// Equip an Item
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="item"></param>
         /// <param name="index"></param>
-        public void Equip<T>(T item, int index) where T : Item
+        /// <param name="equip"></param>
+        public void Equip<T>(T item, int index, bool equip) where T : Item
         {
             Type t = typeof(T);
 
-            if(t == typeof(Weapon))
+            if (t == typeof(Weapon))
             {
-                if((item as Weapon).WeaponType == WeaponType.Primary)
+                Debug.Log("Item trying to equip is a weapon");
+                if ((item as Weapon).WeaponType == WeaponType.Primary)
                 {
-                    PrimaryIndex = index;
+                    Debug.Log("Setting it as a Primary Weapon");
+                    PrimaryIndex = equip ? index : -1;
                 }
                 else
                 {
-                    SecondaryIndex = index;
+                    SecondaryIndex = equip ? index : -1;
                 }
             }
             else if (t == typeof(QuestItem))
             {
-                TertiaryIndex = index;
+                TertiaryIndex = equip ? index : -1;
             }
             else
             {
                 Debug.Log("CANNOT EQUIP THIS TYPE OF ITEM");
+            }
+        }
+        
+        public void Equip<T>(T item, int index) where T : Item
+        {
+            Equip<T>(item, index, true);
+        }
+
+        public void Equip(Item item, bool equip = true)
+        {
+            switch (item.IType)
+            {
+                case ItemType.Weapon:
+                    Debug.Log("Equipping Weapon");
+                    Equip<Weapon>((Weapon)item, Weapons.Objects.IndexOf((Weapon)item), equip);
+                    break;
+                case ItemType.Consumable:
+                    Equip<Consumable>((Consumable)item, Consumables.Objects.IndexOf((Consumable)item), equip);
+                    break;
+                case ItemType.Quest:
+                    Equip<QuestItem>((QuestItem)item, QuestItems.Objects.IndexOf((QuestItem)item), equip);
+                    break;
             }
         }
         #endregion

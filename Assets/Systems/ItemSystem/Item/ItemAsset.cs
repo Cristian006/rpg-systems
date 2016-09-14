@@ -108,6 +108,11 @@ namespace Systems.ItemSystem
             IType = ItemType.None;
             Weight = 0;
             Description = String.Empty;
+            Stackable = false;
+            StackSize = 0;
+            Icon = null;
+            Level = 1;
+            Cost = 0;
         }
 
         public ItemAsset(int id) : base (id)
@@ -115,6 +120,11 @@ namespace Systems.ItemSystem
             IType = ItemType.None;
             Weight = 0;
             Description = String.Empty;
+            Stackable = false;
+            StackSize = 0;
+            Icon = null;
+            Level = 1;
+            Cost = 0;
         }
 
         public ItemAsset(int id, string name) : base(id, name)
@@ -122,14 +132,23 @@ namespace Systems.ItemSystem
             IType = ItemType.None;
             Weight = 0;
             Description = String.Empty;
+            Stackable = false;
+            StackSize = 0;
+            Icon = null;
+            Level = 1;
+            Cost = 0;
         }
 
-        public ItemAsset(int id, string name, ItemType iType, int weight, string description, bool stackable) : base(id, name)
+        public ItemAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name)
         {
-            IType = iType;
+            IType = ItemType.None;
             Weight = weight;
             Description = description;
             Stackable = stackable;
+            StackSize = stackSize;
+            Icon = icon;
+            Level = level;
+            Cost = cost;
         }
     }
 }
