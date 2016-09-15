@@ -16,6 +16,18 @@ namespace Systems.InventorySystem
         [SerializeField]
         private Inventory _inventory;
 
+        public EventHandler OnPrimaryChange;
+        public EventHandler OnSecondaryChange;
+        public EventHandler OnTertiaryChange;
+
+        public EventHandler OnItemRemovedSuccess;
+        public EventHandler OnItemRemovdFailure;
+
+        public EventHandler OnItemAddedSuccess;
+        public EventHandler OnItemAddedFailure;
+
+        public EventHandler OnInventoryChange;
+
         private int _primaryIndex = -1;
         private int _secondaryIndex = -1;
         private int _tertiaryIndex = -1;
@@ -192,9 +204,11 @@ namespace Systems.InventorySystem
             if(item.Weight <= AvailableWeight)
             {
                 inventory.Objects<T>().Add(item);
+                TriggerOnItemAdded(true);
             }
             else
             {
+                TriggerOnItemAdded(false);
                 Debug.Log("Can not add anymore Items, too much weight!");
             }
         }
@@ -207,6 +221,7 @@ namespace Systems.InventorySystem
         public void Remove<T>(T item) where T : Item
         {
             inventory.Objects<T>().Remove(item);
+            TriggerOnItemRemoved(false);
         }
 
         /// <summary>
@@ -217,6 +232,7 @@ namespace Systems.InventorySystem
         public void RemoveAt<T>(int index) where T : Item
         {
             inventory.Objects<T>().RemoveAt(index);
+            TriggerOnItemRemoved(true);
         }
 
         /// <summary>
@@ -232,9 +248,11 @@ namespace Systems.InventorySystem
             if ((inventory.Weight - differnceInWeight) <= MaxWeight)
             {
                 inventory.Objects<T>().Replace(index, item);
+                TriggerOnItemRemoved(true);
             }
             else
             {
+                TriggerOnItemRemoved(false);
                 Debug.Log("CANNOT REPLACE ITEM, TOO MUCH WEIGHT");
             }
         }
@@ -311,15 +329,18 @@ namespace Systems.InventorySystem
                 {
                     Debug.Log("Setting it as a Primary Weapon");
                     PrimaryIndex = equip ? index : -1;
+                    TriggerPrimaryChange();
                 }
                 else
                 {
                     SecondaryIndex = equip ? index : -1;
+                    TriggerSecondaryChange();
                 }
             }
             else if (t == typeof(QuestItem))
             {
                 TertiaryIndex = equip ? index : -1;
+                TriggerTertiaryChange();
             }
             else
             {
@@ -346,6 +367,78 @@ namespace Systems.InventorySystem
                 case ItemType.Quest:
                     Equip<QuestItem>((QuestItem)item, QuestItems.Objects.IndexOf((QuestItem)item), equip);
                     break;
+            }
+        }
+        #endregion
+
+        #region EVENT HANDLERS
+        void TriggerPrimaryChange()
+        {
+            if(OnPrimaryChange != null)
+            {
+                OnPrimaryChange(this, null);
+            }
+        }
+        void TriggerSecondaryChange()
+        {
+            if (OnSecondaryChange != null)
+            {
+                OnSecondaryChange(this, null);
+            }
+        }
+        void TriggerTertiaryChange()
+        {
+            if (OnTertiaryChange != null)
+            {
+                OnTertiaryChange(this, null);
+            }
+        }
+
+        void TriggerOnItemAdded(bool itemWasAdded)
+        {
+            if (itemWasAdded)
+            {
+                TriggerInventoryChange();
+                if (OnItemAddedSuccess != null)
+                {
+                    OnItemAddedSuccess(this, null);
+                }
+            }
+            else
+            {
+                if (OnItemAddedFailure != null)
+                {
+                    OnItemAddedFailure(this, null);
+                }
+            }
+            
+        }
+
+        void TriggerOnItemRemoved(bool itemWasRemoved)
+        {
+            if (itemWasRemoved)
+            {
+                TriggerInventoryChange();
+                if (OnItemRemovedSuccess != null)
+                {
+                    OnItemRemovedSuccess(this, null);
+                }
+            }
+            else
+            {
+                if(OnItemRemovdFailure != null)
+                {
+                    OnItemRemovedSuccess(this, null);
+                }
+            }
+            
+        }
+
+        void TriggerInventoryChange()
+        {
+            if(OnInventoryChange!= null)
+            {
+                OnInventoryChange(this, null);
             }
         }
         #endregion

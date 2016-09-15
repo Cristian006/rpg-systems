@@ -2,24 +2,23 @@
 using UnityEngine.UI;
 using System.Collections;
 using Systems.ItemSystem;
+using Systems.Utility;
 using Systems.InventorySystem;
+using System;
 
 public class UIItem : MonoBehaviour
 {
     private Item _myItem;
     private InventoryTest iT;
-
-    public bool EquippedItem;
-
-    public bool equipped = false;
-
+    public bool EquippedItem; 
     public Image i;
     public Text n;
     public Text desc;
     public Image background;
     public Text equipText;
+    public Color defaultColor = Methods.HexToColor("#FFFFFF63");
 
-    public Color defaultColor;
+    public EventHandler OnItemEquipChange;
 
     public InventoryTest IT
     {
@@ -35,7 +34,7 @@ public class UIItem : MonoBehaviour
 
     void OnEnable()
     {
-        LoadItem();
+        OnItemEquipChange += OnEquipped;
     }
 
     void OnDisable()
@@ -55,7 +54,6 @@ public class UIItem : MonoBehaviour
 	
     void LoadItem()
     {
-        defaultColor = background.color;
         if(MyItem != null)
         {
             i.sprite = MyItem.Icon;
@@ -88,7 +86,7 @@ public class UIItem : MonoBehaviour
     public void RemoveItemFromInventory()
     {
         IT.IM.Remove(MyItem);
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void EquipItem()
@@ -97,12 +95,38 @@ public class UIItem : MonoBehaviour
         {
             Debug.Log("Item is already equipped - un equipping");
             IT.IM.Equip(MyItem, false);
+            TriggerEquipChange();
         }
         else
         {
             Debug.Log("Equipping Item");
             IT.IM.Equip(MyItem);
+            TriggerEquipChange();
         }
-        IT.updateEquipped = true;
+    }
+
+    public void OnEquipped(object sender, EventArgs e)
+    {
+        if (!EquippedItem)
+        {
+            if (IT.IM.isEquipped(MyItem))
+            {
+                equipText.text = "Un Equip";
+                background.color = Color.green;
+            }
+            else
+            {
+                background.color = defaultColor;
+                equipText.text = "Equip";
+            }
+        }
+    }
+
+    public void TriggerEquipChange()
+    {
+        if(OnItemEquipChange != null)
+        {
+            OnItemEquipChange(this, null);
+        }
     }
 }
