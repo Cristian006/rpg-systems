@@ -5,9 +5,9 @@ namespace Systems.ItemSystem
 {
     public enum ItemType
     {
-        Weapon,
-        Consumable,
-        Quest,
-        None
+        None = 0,
+        Weapon = 1,
+        Consumable = 2,
+        Quest = 3
     }
 }

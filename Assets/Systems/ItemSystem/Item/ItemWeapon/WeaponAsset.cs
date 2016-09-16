@@ -19,6 +19,7 @@ namespace Systems.ItemSystem
 
         private int _currentDurablity;
 
+        #region GETTERS AND SETTERS
         public int Durability
         {
             get
@@ -96,12 +97,15 @@ namespace Systems.ItemSystem
                 _weaponDamage = value;
             }
         }
+        #endregion
 
         public WeaponAsset() : base (){
             this.Durability = 0;
             this.Equipable = true;
             this.IType = ItemType.Weapon;
             this.WType = WeaponType.None;
+            this.AttackRange = 0;
+            this.WeaponDamage = 0;
         }
 
         public WeaponAsset(int id) : base (id)
@@ -110,6 +114,8 @@ namespace Systems.ItemSystem
             this.Equipable = true;
             this.IType = ItemType.Weapon;
             this.WType = WeaponType.None;
+            this.AttackRange = 0;
+            this.WeaponDamage = 0;
         }
 
 
@@ -119,22 +125,28 @@ namespace Systems.ItemSystem
             this.Equipable = true;
             this.IType = ItemType.Weapon;
             this.WType = WeaponType.None;
+            this.AttackRange = 0;
+            this.WeaponDamage = 0;
         }
 
-        public WeaponAsset(int id, string name, ItemType iType, int weight, string description, bool stackable) : base(id, name, iType, weight, description, stackable)
+        public WeaponAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.Durability = 0;
             this.Equipable = true;
             this.IType = ItemType.Weapon;
             this.WType = WeaponType.None;
+            this.AttackRange = 0;
+            this.WeaponDamage = 0;
         }
 
-        public WeaponAsset(int id, string name, ItemType iType, int weight, string description, bool stackable, int durability, bool equipable, WeaponType wType) : base(id, name, iType, weight, description, stackable)
+        public WeaponAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost, int durability, bool equipable, WeaponType wType, int attackRange, int weaponDamage) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.Durability = durability;
             this.Equipable = equipable;
             this.IType = ItemType.Weapon;
             this.WType = wType;
+            this.AttackRange = attackRange;
+            this.WeaponDamage = weaponDamage;
         }
     }
 }

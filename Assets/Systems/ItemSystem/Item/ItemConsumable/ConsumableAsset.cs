@@ -26,12 +26,14 @@ namespace Systems.ItemSystem
         public ConsumableAsset() : base (){
             this.IType = ItemType.Consumable;
             this.StatToEffect = StatType.None;
+            this.EffectAmount = 0;
         }
 
         public ConsumableAsset(int id) : base (id)
         {
             this.IType = ItemType.Consumable;
             this.StatToEffect = StatType.None;
+            this.EffectAmount = 0;
         }
 
 
@@ -39,18 +41,21 @@ namespace Systems.ItemSystem
         {
             this.IType = ItemType.Consumable;
             this.StatToEffect = StatType.None;
+            this.EffectAmount = 0;
         }
 
-        public ConsumableAsset(int id, string name, ItemType iType, int weight, string description, bool stackable) : base(id, name, iType, weight, description, stackable)
+        public ConsumableAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.IType = ItemType.Consumable;
             this.StatToEffect = StatType.None;
+            this.EffectAmount = 0;
         }
 
-        public ConsumableAsset(int id, string name, ItemType iType, int weight, string description, bool stackable, int durability, bool equipable, WeaponType wType) : base(id, name, iType, weight, description, stackable)
+        public ConsumableAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost, StatType statToEffect, int effectAmount) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.IType = ItemType.Consumable;
-            this.StatToEffect = StatType.None;
+            this.StatToEffect = statToEffect;
+            this.EffectAmount = effectAmount;
         }
     }
 }

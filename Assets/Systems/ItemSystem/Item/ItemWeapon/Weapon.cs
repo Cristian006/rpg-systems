@@ -10,6 +10,7 @@ namespace Systems.ItemSystem
         private int _currentDurablity;
         private bool _equipable;
         private WeaponType _weaponType;
+
         #region GETTERS AND SETTERS
         public int CurrentDurability
         {
