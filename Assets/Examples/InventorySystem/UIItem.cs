@@ -34,7 +34,16 @@ public class UIItem : MonoBehaviour
 
     void OnEnable()
     {
-        OnItemEquipChange += OnEquipped;
+        //OnItemEquipChange += OnEquipped;
+        if (EquippedItem)
+        {
+            LoadItem();
+        }
+    }
+
+    void Start()
+    {
+        IT.IM.OnEquippedChange += OnEquipped;
     }
 
     void OnDisable()
@@ -60,14 +69,26 @@ public class UIItem : MonoBehaviour
             n.text = string.Format("{0} Lv. {1}", MyItem.Name, MyItem.Level);
             if (!EquippedItem)
             {
-                desc.text = string.Format("Cost: ${0}\nDescription: {1}", MyItem.Cost, MyItem.Description);
+                switch (MyItem.IType)
+                {
+                    case ItemType.Weapon:
+                        desc.text = string.Format("Cost: ${0}\nWeapon Type: {1}\nDurability: {2}\nDescription: {3}", MyItem.Cost, ((Weapon)MyItem).WeaponType.ToString(), ((Weapon)MyItem).Durability, MyItem.Description);
+                        break;
+                    case ItemType.Consumable:
+                        desc.text = string.Format("Cost: ${0}\nDescription: {1}", MyItem.Cost, MyItem.Description);
+                        break;
+                    case ItemType.Quest:
+                        desc.text = string.Format("Cost: ${0}\nDescription: {1}", MyItem.Cost, MyItem.Description);
+                        break;
+                }
                 if (IT.IM.isEquipped(MyItem))
                 {
-                    equipText.text = IT.IM.isEquipped(MyItem) ? "Un Equip" : "Equip";
+                    equipText.text = "Un Equip";
                     background.color = Color.green;
                 }
                 else
                 {
+                    equipText.text = "Equip";
                     background.color = defaultColor;
                 }
             }
@@ -85,8 +106,26 @@ public class UIItem : MonoBehaviour
 
     public void RemoveItemFromInventory()
     {
-        IT.IM.Remove(MyItem);
-        gameObject.SetActive(false);
+        if(MyItem != null)
+        {
+            if (IT.IM.isEquipped(MyItem))
+            {
+                EquipItem();
+            }
+            switch (MyItem.IType)
+            {
+                case ItemType.Weapon:
+                    IT.IM.Remove<Weapon>((Weapon)MyItem);
+                    break;
+                case ItemType.Consumable:
+                    IT.IM.Remove<Consumable>((Consumable)MyItem);
+                    break;
+                case ItemType.Quest:
+                    IT.IM.Remove<QuestItem>((QuestItem)MyItem);
+                    break;
+            }
+            gameObject.SetActive(false);
+        }
     }
 
     public void EquipItem()

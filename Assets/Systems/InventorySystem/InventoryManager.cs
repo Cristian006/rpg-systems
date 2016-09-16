@@ -19,6 +19,7 @@ namespace Systems.InventorySystem
         public EventHandler OnPrimaryChange;
         public EventHandler OnSecondaryChange;
         public EventHandler OnTertiaryChange;
+        public EventHandler OnEquippedChange;
 
         public EventHandler OnItemRemovedSuccess;
         public EventHandler OnItemRemovdFailure;
@@ -209,7 +210,7 @@ namespace Systems.InventorySystem
             else
             {
                 TriggerOnItemAdded(false);
-                Debug.Log("Can not add anymore Items, too much weight!");
+                Debug.Log("Cannot add anymore Items, too much weight!");
             }
         }
 
@@ -220,8 +221,15 @@ namespace Systems.InventorySystem
         /// <param name="item"></param>
         public void Remove<T>(T item) where T : Item
         {
-            inventory.Objects<T>().Remove(item);
-            TriggerOnItemRemoved(false);
+            if (item != null)
+            {
+                inventory.Objects<T>().Remove(item);
+                TriggerOnItemRemoved(true);
+            }
+            else
+            {
+                TriggerOnItemRemoved(false);
+            }
         }
 
         /// <summary>
@@ -330,17 +338,20 @@ namespace Systems.InventorySystem
                     Debug.Log("Setting it as a Primary Weapon");
                     PrimaryIndex = equip ? index : -1;
                     TriggerPrimaryChange();
+                    TriggerOnEquippedChange();
                 }
                 else
                 {
                     SecondaryIndex = equip ? index : -1;
                     TriggerSecondaryChange();
+                    TriggerOnEquippedChange();
                 }
             }
             else if (t == typeof(QuestItem))
             {
                 TertiaryIndex = equip ? index : -1;
                 TriggerTertiaryChange();
+                TriggerOnEquippedChange();
             }
             else
             {
@@ -439,6 +450,14 @@ namespace Systems.InventorySystem
             if(OnInventoryChange!= null)
             {
                 OnInventoryChange(this, null);
+            }
+        }
+
+        void TriggerOnEquippedChange()
+        {
+            if(OnEquippedChange != null)
+            {
+                OnEquippedChange(this, null);
             }
         }
         #endregion
