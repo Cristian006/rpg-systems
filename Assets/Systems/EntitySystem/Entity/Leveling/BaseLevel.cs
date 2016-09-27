@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DefualtLevel : EntityLevel
+public class BaseLevel : EntityLevel
 {
     public override int GetExpRequiredForLevel(int level)
     {

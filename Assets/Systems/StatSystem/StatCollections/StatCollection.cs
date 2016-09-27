@@ -30,7 +30,6 @@ namespace Systems.StatSystem
         public StatCollection()
         {
             _statDictionary = new Dictionary<StatType, Stat>();
-            //ConfigureStats();
         }
 
         protected virtual void ConfigureStats()

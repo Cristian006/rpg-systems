@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using Systems.ItemSystem;
 using Systems.StatSystem;
-using Systems.InventorySystem.Utility;
 
 //TODO: Event handlers for weapon change
 namespace Systems.InventorySystem

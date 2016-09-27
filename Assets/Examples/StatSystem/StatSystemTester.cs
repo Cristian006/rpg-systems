@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Systems.StatSystem;
-
+using Systems.EntitySystem;
 
 public class StatSystemTester : MonoBehaviour
 {

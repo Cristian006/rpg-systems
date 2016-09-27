@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System;
 using Systems.StatSystem;
+using Systems.EntitySystem;
 
 [Serializable]
 public struct StatBar

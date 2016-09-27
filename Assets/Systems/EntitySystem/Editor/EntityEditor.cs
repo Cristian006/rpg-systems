@@ -2,16 +2,16 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Systems.StatSystem.Editor
+namespace Systems.EntitySystem.Editor
 {
-    public class StatTypeEditorWindow : EditorWindow
-    {        
-        [MenuItem("Window/Systems/Stat Types %#T")]
+    public class EntityEditor : EditorWindow
+    {
+        [MenuItem("Window/Systems/Entity Database %#E")]
         static public void ShowWindow()
         {
-            var window = GetWindow<StatTypeEditorWindow>();
+            var window = GetWindow<EntityEditor>();
             window.minSize = new Vector2(800, 600);
-            window.titleContent.text = "Stat System - Stat Types";
+            window.titleContent.text = "Entity System";
             window.Show();
         }
 
@@ -23,7 +23,7 @@ namespace Systems.StatSystem.Editor
         {
             get
             {
-                if(_toggleButtonStyle == null)
+                if (_toggleButtonStyle == null)
                 {
                     _toggleButtonStyle = new GUIStyle(EditorStyles.toolbarButton);
                     ToggleButtonStyle.alignment = TextAnchor.MiddleLeft;
@@ -41,9 +41,9 @@ namespace Systems.StatSystem.Editor
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
-            for(int i =0; i < StatTypeDatabase.GetAssetCount(); i++)
+            for (int i = 0; i < EntityDatabase.GetAssetCount(); i++)
             {
-                var asset = StatTypeDatabase.GetAt(i);
+                var asset = EntityDatabase.GetAt(i);
                 if(asset != null)
                 {
                     GUILayout.BeginHorizontal(EditorStyles.toolbar);
@@ -64,9 +64,9 @@ namespace Systems.StatSystem.Editor
                         }
                     }
 
-                    if (GUILayout.Button("-", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Stat Type", "Are you sure you want to delete " + asset.Name + " Stat Type?", "Delete", "Cancel"))
+                    if(GUILayout.Button("-", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Entity", "Are you sure you want to delete " + asset.Name + " Entity?", "Delete", "Cancel"))
                     {
-                        StatTypeDatabase.Instance.RemoveAt(i);
+                        EntityDatabase.Instance.RemoveAt(i);
                     }
 
                     GUILayout.EndHorizontal();
@@ -76,38 +76,33 @@ namespace Systems.StatSystem.Editor
                         EditorGUI.BeginChangeCheck();
 
                         //START OF SELECTED VIEW
-                        GUILayout.BeginVertical("Box");
-                        GUILayout.BeginHorizontal();
+                        GUILayout.BeginVertical("Box");  //a
+                        GUILayout.BeginHorizontal();     //b
                         //SPRITE ON LEFT OF HORIZONTAL
-                        GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        GUILayout.Label("Stat Sprite", GUILayout.Width(72));
+                        GUILayout.BeginVertical(GUILayout.Width(75)); //c
+                        GUILayout.Label("Entity Icon", GUILayout.Width(72));
                         asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
-                        GUILayout.EndVertical();   //end vertical
-                        
-                        //INFO ON RIGHT OF HORIZONTAL
-                        GUILayout.BeginVertical(); //begin vertical
+                        GUILayout.EndVertical();   //c
 
-                        GUILayout.BeginHorizontal();
+                        GUILayout.BeginVertical(); //d
+
+                        GUILayout.BeginHorizontal();  //e
                         GUILayout.Label("Name", GUILayout.Width(80));
                         asset.Name = EditorGUILayout.TextField(asset.Name);
-                        GUILayout.EndHorizontal();
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Short Name", GUILayout.Width(80));
-                        asset.ShortName = EditorGUILayout.TextField(asset.ShortName);
-                        GUILayout.EndHorizontal();
-                        GUILayout.BeginHorizontal();
+                        GUILayout.EndHorizontal();   //e
+                        GUILayout.BeginHorizontal(); //f
                         GUILayout.Label("Description", GUILayout.Width(80));
                         asset.Description = EditorGUILayout.TextArea(asset.Description, GUILayout.MinHeight(50));
-                        GUILayout.EndHorizontal();
+                        GUILayout.EndHorizontal(); //f
 
-                        GUILayout.EndVertical();  //end vertical
+                        GUILayout.EndVertical();  //d
 
-                        GUILayout.EndHorizontal();
-                        GUILayout.EndVertical();
+                        GUILayout.EndHorizontal();  //b
+                        GUILayout.EndVertical();  //a
 
                         if (EditorGUI.EndChangeCheck())
                         {
-                            EditorUtility.SetDirty(StatTypeDatabase.Instance);
+                            EditorUtility.SetDirty(EntityDatabase.Instance);
                         }
                     }
                 }
@@ -116,19 +111,13 @@ namespace Systems.StatSystem.Editor
             GUILayout.EndScrollView();
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Add Type", EditorStyles.toolbarButton))
+            if(GUILayout.Button("New Entity", EditorStyles.toolbarButton))
             {
-                var newAsset = new StatTypeAsset(StatTypeDatabase.Instance.GetNextId());
-                StatTypeDatabase.Instance.Add(newAsset);
-            }
-
-            if(GUILayout.Button("Generate StatType Enum", EditorStyles.toolbarButton))
-            {
-                StatTypeGenerator.CheckAndGenerateFile();
+                var newAsset = new EntityAsset(EntityDatabase.Instance.GetNextId());
+                EntityDatabase.Instance.Add(newAsset);
             }
 
             GUILayout.EndHorizontal();
         }
     }
 }
-

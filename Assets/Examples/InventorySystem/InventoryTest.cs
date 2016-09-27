@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 using Systems.ItemSystem;
 using Systems.InventorySystem;
 using System;
+using Systems.EntitySystem;
 
 public class InventoryTest : MonoBehaviour
 {
