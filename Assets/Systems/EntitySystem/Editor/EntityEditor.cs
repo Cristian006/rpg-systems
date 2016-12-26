@@ -1,6 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.Collections;
+using Systems.StatSystem;
+using Systems.EntitySystem;
 
 namespace Systems.EntitySystem.Editor
 {
@@ -94,6 +96,20 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.Label("Description", GUILayout.Width(80));
                         asset.Description = EditorGUILayout.TextArea(asset.Description, GUILayout.MinHeight(50));
                         GUILayout.EndHorizontal(); //f
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("Entity Class", GUILayout.Width(80));
+                        asset.EClass = (EntityClass)EditorGUILayout.EnumPopup(asset.EClass);
+                        GUILayout.EndHorizontal();
+
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("Player Type", GUILayout.Width(80));
+                        asset.PType = (PlayerType)EditorGUILayout.EnumPopup(asset.PType);
+                        GUILayout.EndHorizontal();
+
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("Stat Collection Type", GUILayout.Width(80));
+                        asset.Collection = EditorGUILayout.ObjectField(asset.Collection, typeof(StatCollection), false) as StatCollection;
+                        GUILayout.EndHorizontal();
 
                         GUILayout.EndVertical();  //d
 
@@ -116,7 +132,10 @@ namespace Systems.EntitySystem.Editor
                 var newAsset = new EntityAsset(EntityDatabase.Instance.GetNextId());
                 EntityDatabase.Instance.Add(newAsset);
             }
+            if (GUILayout.Button("Generate Prefab Folder", EditorStyles.toolbarButton))
+            {
 
+            }
             GUILayout.EndHorizontal();
         }
     }

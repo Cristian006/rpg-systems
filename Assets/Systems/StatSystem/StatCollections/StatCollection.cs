@@ -14,6 +14,7 @@ namespace Systems.StatSystem
             {
                 if (_statDictionary == null)
                 {
+                    //initialize the stat collection if it hasn't already
                     _statDictionary = new Dictionary<StatType, Stat>();
                     ConfigureStats();
                 }
@@ -37,26 +38,34 @@ namespace Systems.StatSystem
 
         }
 
+        //Check for stat in collection
         public bool ContainsStat(StatType statType)
         {
             return StatDict.ContainsKey(statType);
         }
 
-        public Stat GetStat(StatType statType)
+        //Gets the coresponding stat if it's in the collection
+        //read only
+        protected Stat this[StatType statType]
         {
-            if (ContainsStat(statType))
+            get
             {
-                //Debug.Log("DICTIONARY DOES CONTAIN A STAT OF TYPE: " + statType.ToString());
-                return StatDict[statType];
+                if (ContainsStat(statType))
+                {
+                    return StatDict[statType];
+                }
+                return null;
             }
-            return null;
         }
-
+        
+        //returns a Stat of Type T
         public T GetStat<T>(StatType type) where T : Stat
         {
-            return GetStat(type) as T;
+            //return GetStat(type) as T;
+            return this[type] as T;
         }
 
+        //Creates the <T> Stat and adds it to the collection
         protected T CreateStat<T>(StatType statType) where T : Stat
         {
             T stat = Activator.CreateInstance<T>();
@@ -65,6 +74,7 @@ namespace Systems.StatSystem
             return stat;
         }
 
+        //This method returns a stat and if it's not in the collection it creates it and adds it to the collection
         protected T CreateOrGetStat<T>(StatType statType) where T : Stat
         {
             T stat = GetStat<T>(statType);
@@ -91,7 +101,7 @@ namespace Systems.StatSystem
         {
             if (ContainsStat(target))
             {
-                var modStat = GetStat(target) as IStatModifiable;
+                var modStat = this[target] as IStatModifiable;
                 if (modStat != null)
                 {
                     modStat.AddModifier(mod);
@@ -124,7 +134,7 @@ namespace Systems.StatSystem
         {
             if (ContainsStat(target))
             {
-                var modStat = GetStat(target) as IStatModifiable;
+                var modStat = this[target] as IStatModifiable;
                 if (modStat != null)
                 {
                     modStat.RemoveModifier(mod);
@@ -177,7 +187,7 @@ namespace Systems.StatSystem
         {
             if (ContainsStat(target))
             {
-                var modStat = GetStat(target) as IStatModifiable;
+                var modStat = this[target] as IStatModifiable;
                 if (modStat != null)
                 {
                     modStat.ClearModifiers();
@@ -213,7 +223,7 @@ namespace Systems.StatSystem
         {
             if (ContainsStat(target))
             {
-                var modStat = GetStat(target) as IStatModifiable;
+                var modStat = this[target] as IStatModifiable;
                 if (modStat != null)
                 {
                     modStat.UpdateModifiers();
@@ -245,7 +255,7 @@ namespace Systems.StatSystem
         {
             if (ContainsStat(target))
             {
-                var stat = GetStat(target) as IStatScalable;
+                var stat = this[target] as IStatScalable;
                 if (stat != null)
                 {
                     stat.ScaleStat(level);
@@ -270,14 +280,13 @@ namespace Systems.StatSystem
             //INTERFACE CHECKING FOR STAT REGEN ABILITY
             foreach (var i in StatDict.Keys)
             {
-                var stat = GetStat<Stat>((StatType)i);
+                var stat = this[(StatType)i];
                 IStatRegen s = stat as IStatRegen;
                 if(s != null)
                 {
                     re.Add(stat as StatRegen);
                 }
             }
-            
             return re;
         }
     }

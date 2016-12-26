@@ -54,9 +54,9 @@ namespace Systems.EntitySystem
             return Instance.Count;
         }
 
-        static public Entity GetItemFromAsset(EntityAsset entityAsset)
+        static public EntityData GetDataFromAsset(EntityAsset entityAsset)
         {
-            return new Entity(entityAsset);
+            return new EntityData(entityAsset);
         }
     }
 }

@@ -168,7 +168,7 @@ namespace Systems.InventorySystem
         {
             get
             {
-                return MyEntity.stats.GetStat<StatVital>(StatType.InventoryCap).StatValue;
+                return MyEntity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatValue;
             }
         }
 

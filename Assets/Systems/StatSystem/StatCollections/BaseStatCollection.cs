@@ -3,7 +3,11 @@
 namespace Systems.StatSystem
 {
     /// <summary>
-    /// The base stat collection
+    /// Example Stat Collection
+    /// In reality we would make stat collections like-
+    /// WarriorStatCollection
+    ///     then in the configure stats part - define what kind of base stats and linked attributes
+    ///     a warrior would have
     /// </summary>
     public class BaseStatCollection : StatCollection
     {
@@ -106,6 +110,7 @@ namespace Systems.StatSystem
             RegenStats();
         }
 
+        //Only way to make regen stats work
         void RegenStats()
         {
             foreach (var i in GetAllRegeneratingStats())

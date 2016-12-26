@@ -1,48 +1,72 @@
 ﻿using UnityEngine;
 using Systems.StatSystem;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace Systems.EntitySystem
 {
-    public class Entity : MonoBehaviour
+    public class EntityData
     {
-        public string entityName;
-        public string Description;
-        public EntityLevel level;
-        public StatCollection stats;
-        public EntityClass entityClass;
-        public PlayerType playerType;
-        
-        public Entity()
+        public EntityData()
         {
 
         }
 
-        public Entity(EntityAsset entityAsset)
+        public EntityData(EntityAsset entityAsset)
         {
             entityName = entityAsset.Name;
             entityClass = entityAsset.EClass;
-            playerType = entityAsset.PType;            
+            playerType = entityAsset.PType;
         }
+
+        public Sprite entityImage;
+        public string entityName;
+        public string Description;
+        public EntityClass entityClass;
+        public PlayerType playerType;
+
+    }
+
+    public class Entity : MonoBehaviour
+    {
+        private StatCollection stats;
+        private EntityLevel level;
+
+        public StatCollection Stats
+        {
+            get
+            {
+                if(stats == null)
+                {
+                    stats = GetComponent<StatCollection>();
+                }
+
+                return stats;
+            }
+            set { stats = value; }
+        }
+
+        public EntityLevel Level
+        {
+            get
+            {
+                if(level == null)
+                {
+                    level = GetComponent<EntityLevel>();
+                }
+                return level;
+            }
+            set
+            {
+                level = value;
+            }
+        }
+
+        public EntityData data = new EntityData();
 
         void Awake()
         {
-            if (level == null)
-            {
-                level = GetComponent<EntityLevel>();
-                if (level == null)
-                {
-                    Debug.LogWarning("No Entity Level Assigned to this Entity");
-                }
-            }
-            if (stats == null)
-            {
-                stats = GetComponent<BaseStatCollection>();
-                if (stats == null)
-                {
-                    Debug.LogWarning("No Stat Collection Assigned to this Entity");
-                }
-            }
+            
         }
 
         public void TakeDamage(int amount)

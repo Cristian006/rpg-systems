@@ -5,6 +5,7 @@ using Systems.StatSystem;
 
 namespace Systems.EntitySystem
 {
+    [System.Serializable]
     public class EntityAsset : BaseDatabaseAsset
     {
         Sprite icon;
@@ -90,6 +91,18 @@ namespace Systems.EntitySystem
             set
             {
                 playerType = value;
+            }
+        }
+
+        public StatCollection Collection
+        {
+            get
+            {
+                return statCollection;
+            }
+            set
+            {
+                statCollection = value;
             }
         }
         #endregion

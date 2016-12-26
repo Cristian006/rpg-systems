@@ -4,6 +4,21 @@ using System.Collections.Generic;
 
 namespace Systems.StatSystem
 {
+    /*
+    Fourth layer of stat inheritence.
+
+    Added Functionality:
+        Regeneration of stat points to the current value of the stat
+    
+    Stat Regen is a regenerating Stat
+    Downside: makes Stat Collection have to be a Monobehaviour to work with the update function
+        (not really a downside - haven't run into any issues yet)
+        Ex: Health
+            - has current stat value: 45 HP
+            - has max stat value: 100 HP
+            - regen amount per second .5 pt
+                (every two seconds the stat will regenerate a single stat point)
+    */
     public class StatRegen : StatVital, IStatRegen
     {
         private int _baseSecondsPerPoint;
@@ -11,7 +26,14 @@ namespace Systems.StatSystem
         private float _timeForNextRegen = 0;
         private int _min_secondsPerPoint = 1;
         private float _linkMultiplier = 1.2f;
-        //TODO: LINKER VARIABLES TO REGEN
+        //TODO: LINKER VARIABLES TO REGEN AMOUNT so when linked it can change not the stat value but the secondary stat - seconds per point which I started implementing in Stat Linker class but haven't finished
+
+        #region Properties - Getters/Setters
+        public StatRegen()
+        {
+            TimeForNextRegen = 0;
+        }
+        #endregion
 
         /// <summary>
         /// The amount of time required to regen 1 point
@@ -45,7 +67,6 @@ namespace Systems.StatSystem
                 _secondsPerPoint = _baseSecondsPerPoint;
             }
         }
-
 
         public float LinkMultiplier
         {
@@ -95,18 +116,14 @@ namespace Systems.StatSystem
             }
         }
 
-
-        public StatRegen()
-        {
-            TimeForNextRegen = 0;
-        }
-
+        //regenerate the point
         public void Regenerate()
         {
             StatCurrentValue++;
             //bug.Log("REGENERATING " + StatName + ": " + StatCurrentValue);
         }
 
+        //overriding the update linker function to work with the secondary stat linkers
         public override void UpdateLinkers()
         {
             StatLinkerValue = 0;
@@ -115,6 +132,7 @@ namespace Systems.StatSystem
             {
                 if (link.SecondaryStatLinker)
                 {
+                    //secondaryStatLinks effecting the regen amount per seconds
                     SecondsPerPoint = BaseSecondsPerPoint - (int)(link.Value * LinkMultiplier);
                 }
                 else

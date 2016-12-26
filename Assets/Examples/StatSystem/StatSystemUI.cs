@@ -45,21 +45,21 @@ public class StatSystemUI : MonoBehaviour {
     void Start()
     {
         //Adding ourselves to the callbacks
-        entity.level.OnEntityExpGain += OnExpGain;
-        entity.level.OnEntityLevelChange += OnLevelGain;
-        entity.stats.GetStat<StatRegen>(StatType.Health).OnCurrentValueChanged += OnHealthChange;
-        entity.stats.GetStat<StatVital>(StatType.Magic).OnCurrentValueChanged += OnMagicChange;
-        entity.stats.GetStat<StatVital>(StatType.Mana).OnCurrentValueChanged += OnManaChange;
-        entity.stats.GetStat<StatVital>(StatType.Armor).OnCurrentValueChanged += OnArmorChange;
-        entity.stats.GetStat<StatVital>(StatType.Speed).OnValueChanged += OnSpeedChange;
-        entity.stats.GetStat<StatVital>(StatType.InventoryCap).OnValueChanged += OnInventoryCapChange;
-        entity.stats.GetStat<StatVital>(StatType.InventoryCap).OnCurrentValueChanged += OnInventoryCapChange;
+        entity.Level.OnEntityExpGain += OnExpGain;
+        entity.Level.OnEntityLevelChange += OnLevelGain;
+        entity.Stats.GetStat<StatRegen>(StatType.Health).OnCurrentValueChanged += OnHealthChange;
+        entity.Stats.GetStat<StatVital>(StatType.Magic).OnCurrentValueChanged += OnMagicChange;
+        entity.Stats.GetStat<StatVital>(StatType.Mana).OnCurrentValueChanged += OnManaChange;
+        entity.Stats.GetStat<StatVital>(StatType.Armor).OnCurrentValueChanged += OnArmorChange;
+        entity.Stats.GetStat<StatVital>(StatType.Speed).OnValueChanged += OnSpeedChange;
+        entity.Stats.GetStat<StatVital>(StatType.InventoryCap).OnValueChanged += OnInventoryCapChange;
+        entity.Stats.GetStat<StatVital>(StatType.InventoryCap).OnCurrentValueChanged += OnInventoryCapChange;
 
-        entity.stats.GetStat<StatAttribute>(StatType.Stamina).OnValueChanged += OnAttribChange;
-        entity.stats.GetStat<StatAttribute>(StatType.Strength).OnValueChanged += OnAttribChange;
-        entity.stats.GetStat<StatAttribute>(StatType.Intellegence).OnValueChanged += OnAttribChange;
-        entity.stats.GetStat<StatAttribute>(StatType.Endurance).OnValueChanged += OnAttribChange;
-        entity.stats.GetStat<StatAttribute>(StatType.Agility).OnValueChanged += OnAttribChange;
+        entity.Stats.GetStat<StatAttribute>(StatType.Stamina).OnValueChanged += OnAttribChange;
+        entity.Stats.GetStat<StatAttribute>(StatType.Strength).OnValueChanged += OnAttribChange;
+        entity.Stats.GetStat<StatAttribute>(StatType.Intellegence).OnValueChanged += OnAttribChange;
+        entity.Stats.GetStat<StatAttribute>(StatType.Endurance).OnValueChanged += OnAttribChange;
+        entity.Stats.GetStat<StatAttribute>(StatType.Agility).OnValueChanged += OnAttribChange;
 
         UpdateStats();
         UpdateAttribs();
@@ -69,44 +69,45 @@ public class StatSystemUI : MonoBehaviour {
     private void UpdateStats()
     {
         //setting the bars default values
-        exp.bar.maxValue = entity.level.ExpRequired;
-        exp.bar.value = entity.level.ExpCurrent;
-        health.bar.maxValue = entity.stats.GetStat<StatRegen>(StatType.Health).StatValue;
-        health.bar.value = entity.stats.GetStat<StatRegen>(StatType.Health).StatCurrentValue;
-        invent.bar.maxValue = entity.stats.GetStat<StatVital>(StatType.InventoryCap).StatValue;
-        invent.bar.value = entity.stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue;
-        magic.bar.maxValue = entity.stats.GetStat<StatVital>(StatType.Magic).StatValue;
-        magic.bar.value = entity.stats.GetStat<StatVital>(StatType.Magic).StatCurrentValue;
-        armor.bar.maxValue = entity.stats.GetStat<StatVital>(StatType.Armor).StatValue;
-        armor.bar.value = entity.stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue;
-        mana.bar.maxValue = entity.stats.GetStat<StatVital>(StatType.Mana).StatValue;
-        mana.bar.value = entity.stats.GetStat<StatVital>(StatType.Mana).StatCurrentValue;
-        speed.bar.maxValue = entity.stats.GetStat<StatVital>(StatType.Speed).StatValue;
-        speed.bar.value = entity.stats.GetStat<StatVital>(StatType.Speed).StatCurrentValue;
+        exp.bar.maxValue = entity.Level.ExpRequired;
+        exp.bar.value = entity.Level.ExpCurrent;
+        health.bar.maxValue = entity.Stats.GetStat<StatRegen>(StatType.Health).StatValue;
+        health.bar.value = entity.Stats.GetStat<StatRegen>(StatType.Health).StatCurrentValue;
+        invent.bar.maxValue = entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatValue;
+        invent.bar.value = entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue;
+        magic.bar.maxValue = entity.Stats.GetStat<StatVital>(StatType.Magic).StatValue;
+        magic.bar.value = entity.Stats.GetStat<StatVital>(StatType.Magic).StatCurrentValue;
+        armor.bar.
+            maxValue = entity.Stats.GetStat<StatVital>(StatType.Armor).StatValue;
+        armor.bar.value = entity.Stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue;
+        mana.bar.maxValue = entity.Stats.GetStat<StatVital>(StatType.Mana).StatValue;
+        mana.bar.value = entity.Stats.GetStat<StatVital>(StatType.Mana).StatCurrentValue;
+        speed.bar.maxValue = entity.Stats.GetStat<StatVital>(StatType.Speed).StatValue;
+        speed.bar.value = entity.Stats.GetStat<StatVital>(StatType.Speed).StatCurrentValue;
 
         //settign the bars default text
         exp.text.text = string.Format("{0} / {1} (Level {2})",
-            entity.level.ExpCurrent,
-            entity.level.ExpRequired,
-            entity.level.Level);
+            entity.Level.ExpCurrent,
+            entity.Level.ExpRequired,
+            entity.Level.Level);
         health.text.text = string.Format("HP {0} / {1}",
-            entity.stats.GetStat<StatRegen>(StatType.Health).StatCurrentValue,
-            entity.stats.GetStat<StatRegen>(StatType.Health).StatValue);
+            entity.Stats.GetStat<StatRegen>(StatType.Health).StatCurrentValue,
+            entity.Stats.GetStat<StatRegen>(StatType.Health).StatValue);
         invent.text.text = string.Format("INVN {0} / {1}",
-            entity.stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue,
-            entity.stats.GetStat<StatVital>(StatType.InventoryCap).StatValue);
+            entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue,
+            entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatValue);
         magic.text.text = string.Format("MAGC {0} / {1}",
-            entity.stats.GetStat<StatVital>(StatType.Magic).StatCurrentValue,
-            entity.stats.GetStat<StatVital>(StatType.Magic).StatValue);
+            entity.Stats.GetStat<StatVital>(StatType.Magic).StatCurrentValue,
+            entity.Stats.GetStat<StatVital>(StatType.Magic).StatValue);
         mana.text.text = string.Format("MANA {0} / {1}",
-              entity.stats.GetStat<StatVital>(StatType.Mana).StatCurrentValue,
-              entity.stats.GetStat<StatVital>(StatType.Mana).StatValue);
+              entity.Stats.GetStat<StatVital>(StatType.Mana).StatCurrentValue,
+              entity.Stats.GetStat<StatVital>(StatType.Mana).StatValue);
         armor.text.text = string.Format("ARMR {0} / {1}",
-            entity.stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue,
-            entity.stats.GetStat<StatVital>(StatType.Armor).StatValue);
+            entity.Stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue,
+            entity.Stats.GetStat<StatVital>(StatType.Armor).StatValue);
         speed.text.text = string.Format("SPED {0} / {1}",
-            entity.stats.GetStat<StatVital>(StatType.Speed).StatCurrentValue,
-            entity.stats.GetStat<StatVital>(StatType.Speed).StatValue);
+            entity.Stats.GetStat<StatVital>(StatType.Speed).StatCurrentValue,
+            entity.Stats.GetStat<StatVital>(StatType.Speed).StatValue);
 
     }
 
@@ -114,39 +115,39 @@ public class StatSystemUI : MonoBehaviour {
     {
         //ATTRIBUTES
         stamina.text.text = string.Format("STMNA {0} / {1} / {2}",
-                    entity.stats.GetStat<StatAttribute>(StatType.Stamina).StatValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Stamina).StatBaseValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Stamina).StatLevelValue);
+                    entity.Stats.GetStat<StatAttribute>(StatType.Stamina).StatValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Stamina).StatBaseValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Stamina).StatLevelValue);
 
         strength.text.text = string.Format("STRNGTH {0} / {1} / {2}",
-                    entity.stats.GetStat<StatAttribute>(StatType.Strength).StatValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Strength).StatBaseValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Strength).StatBaseValue);
+                    entity.Stats.GetStat<StatAttribute>(StatType.Strength).StatValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Strength).StatBaseValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Strength).StatBaseValue);
 
         endurance.text.text = string.Format("ENDR {0} / {1} / {2}",
-                    entity.stats.GetStat<StatAttribute>(StatType.Endurance).StatValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Endurance).StatBaseValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Endurance).StatBaseValue);
+                    entity.Stats.GetStat<StatAttribute>(StatType.Endurance).StatValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Endurance).StatBaseValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Endurance).StatBaseValue);
 
         agility.text.text = string.Format("AGIL {0} / {1} / {2}",
-                    entity.stats.GetStat<StatAttribute>(StatType.Agility).StatValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Agility).StatBaseValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Agility).StatBaseValue);
+                    entity.Stats.GetStat<StatAttribute>(StatType.Agility).StatValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Agility).StatBaseValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Agility).StatBaseValue);
 
         intell.text.text = string.Format("INTL {0} / {1} / {2}",
-                    entity.stats.GetStat<StatAttribute>(StatType.Intellegence).StatValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Intellegence).StatBaseValue,
-                    entity.stats.GetStat<StatAttribute>(StatType.Intellegence).StatBaseValue);
+                    entity.Stats.GetStat<StatAttribute>(StatType.Intellegence).StatValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Intellegence).StatBaseValue,
+                    entity.Stats.GetStat<StatAttribute>(StatType.Intellegence).StatBaseValue);
     }
 
     void UpdateInfo()
     {
         string b = "";
-        foreach (var i in entity.stats.StatDict.Keys)
+        foreach (var i in entity.Stats.StatDict.Keys)
         {
-            if (entity.stats.ContainsStat(i))
+            if (entity.Stats.ContainsStat(i))
             {
-                var s = entity.stats.GetStat<StatRegen>(i);
+                var s = entity.Stats.GetStat<StatRegen>(i);
                 if(s != null)
                 {
                     b += string.Format("<b>{0}</b>\nRegen Amount: {1:F}+ per sec.\nMaxValue: {2}\nBase Value: {3}\nCurrent Value: {4}\nLevel Value: {5}\nLinker Value: {6}\nEffected By:",
@@ -160,7 +161,7 @@ public class StatSystemUI : MonoBehaviour {
                 }
                 else
                 {
-                    var j = entity.stats.GetStat<StatVital>(i);
+                    var j = entity.Stats.GetStat<StatVital>(i);
                     if (j != null)
                     {
                         b += string.Format("<b>{0}</b>\nMaxValue: {1}\nBase Value: {2}\nCurrent Value: {3}\nLinker Value: {4}\nEffected By: ", j.StatName, j.StatValue, j.StatBaseValue, j.StatCurrentValue, j.StatLinkerValue);
@@ -172,7 +173,7 @@ public class StatSystemUI : MonoBehaviour {
                     }
                     else
                     {
-                        var k = entity.stats.GetStat<StatAttribute>(i);
+                        var k = entity.Stats.GetStat<StatAttribute>(i);
                         if (k != null)
                         {
                             b += string.Format("<b>{0}</b>\nValue: {1}\nBase Value: {2}\nEffected By: ", k.StatName, k.StatValue, k.StatBaseValue);
@@ -200,7 +201,7 @@ public class StatSystemUI : MonoBehaviour {
 
     private void OnInventoryCapChange(object sender, EventArgs e)
     {
-        var i = entity.stats.GetStat<StatVital>(StatType.InventoryCap);
+        var i = entity.Stats.GetStat<StatVital>(StatType.InventoryCap);
         invent.bar.maxValue = i.StatValue;
         invent.bar.value = i.StatCurrentValue;
         invent.text.text = string.Format("INV {0} / {1}",
@@ -210,7 +211,7 @@ public class StatSystemUI : MonoBehaviour {
 
     private void OnSpeedChange(object sender, EventArgs e)
     {
-        var s = entity.stats.GetStat<StatVital>(StatType.Speed);
+        var s = entity.Stats.GetStat<StatVital>(StatType.Speed);
         speed.bar.maxValue = s.StatValue;
         speed.bar.value = s.StatCurrentValue;
         speed.text.text = string.Format("SPEED {0} / {1}",
@@ -220,7 +221,7 @@ public class StatSystemUI : MonoBehaviour {
 
     private void OnArmorChange(object sender, EventArgs e)
     {
-        var a = entity.stats.GetStat<StatVital>(StatType.Armor);
+        var a = entity.Stats.GetStat<StatVital>(StatType.Armor);
         armor.bar.maxValue = a.StatValue;
         armor.bar.value = a.StatCurrentValue;
         armor.text.text = string.Format("ARMOR {0} / {1}",
@@ -230,7 +231,7 @@ public class StatSystemUI : MonoBehaviour {
 
     private void OnManaChange(object sender, EventArgs e)
     {
-        var m = entity.stats.GetStat<StatVital>(StatType.Mana);
+        var m = entity.Stats.GetStat<StatVital>(StatType.Mana);
         mana.bar.maxValue = m.StatValue;
         mana.bar.value = m.StatCurrentValue;
         mana.text.text = string.Format("MANA {0} / {1}",
@@ -240,7 +241,7 @@ public class StatSystemUI : MonoBehaviour {
 
     private void OnMagicChange(object sender, EventArgs e)
     {
-        var m = entity.stats.GetStat<StatVital>(StatType.Magic);
+        var m = entity.Stats.GetStat<StatVital>(StatType.Magic);
         magic.bar.maxValue = m.StatValue;
         magic.bar.value = m.StatCurrentValue;
         magic.text.text = string.Format("MAGIC {0} / {1}",
@@ -250,27 +251,27 @@ public class StatSystemUI : MonoBehaviour {
 
     void OnLevelGain(object sender, LevelChangeEventArgs args)
     {
-        exp.bar.maxValue = entity.level.ExpRequired;
-        exp.bar.value = entity.level.ExpCurrent;
+        exp.bar.maxValue = entity.Level.ExpRequired;
+        exp.bar.value = entity.Level.ExpCurrent;
         exp.text.text = string.Format("EXP {0} / {1} (LVL {2})",
-            entity.level.ExpCurrent,
-            entity.level.ExpRequired,
+            entity.Level.ExpCurrent,
+            entity.Level.ExpRequired,
             args.NewLevel);
     }
 
     void OnExpGain(object sender, ExpGainEventArgs args)
     {
-        exp.bar.maxValue = entity.level.ExpRequired;
-        exp.bar.value = entity.level.ExpCurrent;
+        exp.bar.maxValue = entity.Level.ExpRequired;
+        exp.bar.value = entity.Level.ExpCurrent;
         exp.text.text = string.Format("EXP {0} / {1} (LVL {2})",
-            entity.level.ExpCurrent,
-            entity.level.ExpRequired,
-            entity.level.Level);
+            entity.Level.ExpCurrent,
+            entity.Level.ExpRequired,
+            entity.Level.Level);
     }
 
     void OnHealthChange(object sender, EventArgs args)
     {
-        var h = entity.stats.GetStat<StatRegen>(StatType.Health);
+        var h = entity.Stats.GetStat<StatRegen>(StatType.Health);
         health.bar.maxValue = h.StatValue;
         health.bar.value = h.StatCurrentValue;
         health.text.text = string.Format("HP {0} / {1}",

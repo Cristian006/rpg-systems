@@ -4,9 +4,28 @@ using System;
 
 namespace Systems.StatSystem
 {
+    //example Linker
+    //Basic StatLinker
     public class StatLinkerBasic : StatLinker
     {
         private float _ratio;
+
+        #region Constructors
+        public StatLinkerBasic() : base()
+        {
+            //empty constructor
+            _ratio = 0;
+        }
+        public StatLinkerBasic(Stat stat, float ratio) : base(stat)
+        {
+            _ratio = ratio;
+        }
+
+        public StatLinkerBasic(Stat stat, float ratio, bool secondary) : base(stat, secondary)
+        {
+            _ratio = ratio;
+        }
+        #endregion
 
         public float Ratio
         {
@@ -22,14 +41,6 @@ namespace Systems.StatSystem
             }
         }
 
-        public StatLinkerBasic(Stat stat, float ratio) : base(stat)
-        {
-            _ratio = ratio;
-        }
 
-        public StatLinkerBasic(Stat stat, float ratio, bool secondary) : base(stat, secondary)
-        {
-            _ratio = ratio;
-        }
     }
 }
