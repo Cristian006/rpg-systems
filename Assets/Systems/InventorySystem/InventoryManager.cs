@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Systems.ItemSystem;
 using Systems.StatSystem;
-using Systems.InventorySystem.Utility;
+using Systems.EntitySystem;
 
 //TODO: Event handlers for weapon change
 namespace Systems.InventorySystem
@@ -168,7 +168,7 @@ namespace Systems.InventorySystem
         {
             get
             {
-                return MyEntity.stats.GetStat<StatVital>(StatType.InventoryCap).StatValue;
+                return MyEntity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatValue;
             }
         }
 

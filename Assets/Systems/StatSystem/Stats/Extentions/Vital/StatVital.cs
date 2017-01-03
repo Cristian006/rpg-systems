@@ -3,11 +3,31 @@ using System;
 using System.Collections;
 namespace Systems.StatSystem
 {
+    /*
+    Third layer of stat inheritence.
+
+    Added Functionality:
+        Current and Max Stat Value
+    
+    Stat Vital is a complete Stat
+        Ex: Health
+            - has current stat value: 45 HP
+            - has max stat value: 100 HP
+    */
     public class StatVital : StatAttribute, IStatCurrentValueChanged
     {
-        private int _statCurrentValue;
-        public event EventHandler OnCurrentValueChanged;
-        
+        private int _statCurrentValue; //the stats current value
+
+        public event EventHandler OnCurrentValueChanged; //event for when the stat value changes  
+
+        #region Constructors 
+        public StatVital()
+        {
+            _statCurrentValue = 0;
+        }
+        #endregion
+
+        #region Properties - Getters/Setters
         public int StatCurrentValue
         {
             get
@@ -31,11 +51,7 @@ namespace Systems.StatSystem
                 }
             }
         }
-
-        public StatVital()
-        {
-            _statCurrentValue = 0;
-        }
+        #endregion
 
         public void RestoreCurrentValueToMax()
         {

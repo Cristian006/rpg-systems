@@ -6,11 +6,12 @@ namespace Systems.StatSystem.Editor
 {
     public class StatTypeEditorWindow : EditorWindow
     {        
-        [MenuItem("Window/Systems/Stat Types %#T")]
+        [MenuItem("Window/Systems/Stat Type Editor %#T")]
         static public void ShowWindow()
         {
             var window = GetWindow<StatTypeEditorWindow>();
-            window.titleContent.text = "Stat Types";
+            window.minSize = new Vector2(800, 600);
+            window.titleContent.text = "Stat System - Stat Types";
             window.Show();
         }
 
@@ -109,7 +110,6 @@ namespace Systems.StatSystem.Editor
                             EditorUtility.SetDirty(StatTypeDatabase.Instance);
                         }
                     }
-
                 }
             }
 
