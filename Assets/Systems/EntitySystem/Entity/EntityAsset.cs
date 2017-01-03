@@ -8,11 +8,14 @@ namespace Systems.EntitySystem
     [System.Serializable]
     public class EntityAsset : BaseDatabaseAsset
     {
+        [SerializeField]
         Sprite icon;
+        [SerializeField]
         string description;
+        [SerializeField]
         EntityClass entityClass;
+        [SerializeField]
         PlayerType playerType;
-        StatCollection statCollection;
 
         #region CONSTRUCTORS
         public EntityAsset() : base()
@@ -91,18 +94,6 @@ namespace Systems.EntitySystem
             set
             {
                 playerType = value;
-            }
-        }
-
-        public StatCollection Collection
-        {
-            get
-            {
-                return statCollection;
-            }
-            set
-            {
-                statCollection = value;
             }
         }
         #endregion
