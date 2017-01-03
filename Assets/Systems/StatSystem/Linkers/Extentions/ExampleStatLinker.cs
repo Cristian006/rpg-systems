@@ -6,22 +6,22 @@ namespace Systems.StatSystem
 {
     //example Linker
     //Basic StatLinker
-    public class StatLinkerBasic : StatLinker
+    public class ExampleStatLinker : StatLinker
     {
         private float _ratio;
 
         #region Constructors
-        public StatLinkerBasic() : base()
+        public ExampleStatLinker() : base()
         {
             //empty constructor
             _ratio = 0;
         }
-        public StatLinkerBasic(Stat stat, float ratio) : base(stat)
+        public ExampleStatLinker(Stat stat, float ratio) : base(stat)
         {
             _ratio = ratio;
         }
 
-        public StatLinkerBasic(Stat stat, float ratio, bool secondary) : base(stat, secondary)
+        public ExampleStatLinker(Stat stat, float ratio, bool secondary) : base(stat, secondary)
         {
             _ratio = ratio;
         }

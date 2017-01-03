@@ -155,7 +155,7 @@ public class StatSystemUI : MonoBehaviour {
 
                     for(int z = 0; z < s.StatLinkers.Count; z++)
                     {
-                        StatLinkerBasic m = (StatLinkerBasic)s.StatLinkers[z];
+                        ExampleStatLinker m = (ExampleStatLinker)s.StatLinkers[z];
                         b += (m.Ratio > 0 ? "+" : "-") + (m.StatThatsLinking.StatName + (z == s.StatLinkers.Count-1 ? "" : ", "));
                     }
                 }
@@ -167,7 +167,7 @@ public class StatSystemUI : MonoBehaviour {
                         b += string.Format("<b>{0}</b>\nMaxValue: {1}\nBase Value: {2}\nCurrent Value: {3}\nLinker Value: {4}\nEffected By: ", j.StatName, j.StatValue, j.StatBaseValue, j.StatCurrentValue, j.StatLinkerValue);
                         for (int z = 0; z < j.StatLinkers.Count; z++)
                         {
-                            StatLinkerBasic m = (StatLinkerBasic)j.StatLinkers[z];
+                            ExampleStatLinker m = (ExampleStatLinker)j.StatLinkers[z];
                             b += (m.Ratio > 0 ? "+" : "-") + (m.StatThatsLinking.StatName + (z == j.StatLinkers.Count - 1 ? "" : ", "));
                         }
                     }
@@ -179,7 +179,7 @@ public class StatSystemUI : MonoBehaviour {
                             b += string.Format("<b>{0}</b>\nValue: {1}\nBase Value: {2}\nEffected By: ", k.StatName, k.StatValue, k.StatBaseValue);
                             for (int z = 0; z < k.StatLinkers.Count; z++)
                             {
-                                StatLinkerBasic m = (StatLinkerBasic)k.StatLinkers[z];
+                                ExampleStatLinker m = (ExampleStatLinker)k.StatLinkers[z];
                                 b += (m.Ratio > 0 ? "+" : "-") + (m.StatThatsLinking.StatName + (z == k.StatLinkers.Count - 1 ? "" : ", "));
                             }
                         }

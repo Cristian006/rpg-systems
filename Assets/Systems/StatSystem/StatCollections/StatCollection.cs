@@ -8,6 +8,14 @@ namespace Systems.StatSystem
     {
         private Dictionary<StatType, Stat> _statDictionary;
 
+        #region Constructors
+        public StatCollection()
+        {
+            _statDictionary = new Dictionary<StatType, Stat>();
+        }
+        #endregion
+
+        #region Properties - Getters/Setters
         public Dictionary<StatType, Stat> StatDict
         {
             get
@@ -23,27 +31,6 @@ namespace Systems.StatSystem
             }
         }
 
-        void Awake()
-        {
-            ConfigureStats();
-        }
-
-        public StatCollection()
-        {
-            _statDictionary = new Dictionary<StatType, Stat>();
-        }
-
-        protected virtual void ConfigureStats()
-        {
-
-        }
-
-        //Check for stat in collection
-        public bool ContainsStat(StatType statType)
-        {
-            return StatDict.ContainsKey(statType);
-        }
-
         //Gets the coresponding stat if it's in the collection
         //read only
         protected Stat this[StatType statType]
@@ -57,6 +44,48 @@ namespace Systems.StatSystem
                 return null;
             }
         }
+
+        /// <summary>
+        /// Returns a List of all regenerating stats
+        /// </summary>
+        /// <returns></returns>
+        public List<StatRegeneratable> GetAllRegeneratingStats
+        {
+            get
+            {
+                List<StatRegeneratable> re = new List<StatRegeneratable>();
+
+                //INTERFACE CHECKING FOR STAT REGEN ABILITY
+                foreach (var i in StatDict.Keys)
+                {
+                    var stat = this[(StatType)i];
+                    IStatRegeneratable s = stat as IStatRegeneratable;
+                    if (s != null)
+                    {
+                        re.Add(stat as StatRegeneratable);
+                    }
+                }
+                return re;
+            }
+        }
+        #endregion
+
+        void Awake()
+        {
+            ConfigureStats();
+        }
+
+        protected virtual void ConfigureStats()
+        {
+
+        }
+
+        //Check for stat in collection
+        public bool ContainsStat(StatType statType)
+        {
+            return StatDict.ContainsKey(statType);
+        }
+
         
         //returns a Stat of Type T
         public T GetStat<T>(StatType type) where T : Stat
@@ -269,34 +298,13 @@ namespace Systems.StatSystem
             }
         }
 
-        /// <summary>
-        /// Returns a List of all regenerating stats
-        /// </summary>
-        /// <returns></returns>
-        public List<StatRegeneratable> GetAllRegeneratingStats()
-        {
-            List<StatRegeneratable> re = new List<StatRegeneratable>();
-
-            //INTERFACE CHECKING FOR STAT REGEN ABILITY
-            foreach (var i in StatDict.Keys)
-            {
-                var stat = this[(StatType)i];
-                IStatRegeneratable s = stat as IStatRegeneratable;
-                if(s != null)
-                {
-                    re.Add(stat as StatRegeneratable);
-                }
-            }
-            return re;
-        }
-
         public override string ToString()
         {
             string i = string.Empty;
             foreach (var key in StatDict.Keys)
             {
                 var stat = this[key];
-                i += key.ToString() + " - " + stat.StatName + ": " + stat.StatValue + "\n";
+                i += stat.StatName + ": " + stat.StatValue + "\n";
             }
             return i;
         }

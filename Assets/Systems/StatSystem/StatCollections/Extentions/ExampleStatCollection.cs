@@ -44,9 +44,9 @@ namespace Systems.StatSystem
             health.StatBaseValue = 100;
             health.BaseSecondsPerPoint = 100;
             //Stamina = 10; and our ratio is 10; 10*10 = 0; health = 100; health + Stamina = 200
-            health.AddLinker(new StatLinkerBasic(CreateOrGetStat<StatAttribute>(StatType.Stamina), 10f)); // health should be 200
+            health.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Stamina), 10f)); // health should be 200
                                                                                                           //Endurance = 8; and our ratio is 1; 1*8= 8; health.SecondsPerPoint = 1; health.SecondsPerPoint - Endurance = 8
-            health.AddLinker(new StatLinkerBasic(CreateOrGetStat<StatAttribute>(StatType.Endurance), 5f, true));
+            health.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Endurance), 5f, true));
             health.UpdateLinkers();
             health.RestoreCurrentValueToMax();
 
@@ -66,7 +66,7 @@ namespace Systems.StatSystem
             mana.StatName = "Mana";
             mana.StatBaseValue = 100;
             mana.BaseSecondsPerPoint = 10;
-            mana.AddLinker(new StatLinkerBasic(CreateOrGetStat<StatAttribute>(StatType.Intellegence), 50f));
+            mana.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Intellegence), 50f));
             mana.UpdateLinkers();
             mana.RestoreCurrentValueToMax();
 
@@ -91,7 +91,7 @@ namespace Systems.StatSystem
             var speed = CreateOrGetStat<StatVital>(StatType.Speed);
             speed.StatName = "Speed";
             speed.StatBaseValue = 1;
-            speed.AddLinker(new StatLinkerBasic(CreateOrGetStat<StatAttribute>(StatType.Agility), 0.01f));
+            speed.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Agility), 0.01f));
             speed.RestoreCurrentValueToMax();
 
             /*
@@ -100,7 +100,7 @@ namespace Systems.StatSystem
             var inventory = CreateOrGetStat<StatVital>(StatType.InventoryCap);
             inventory.StatName = "Inventory";
             inventory.StatBaseValue = 5;
-            inventory.AddLinker(new StatLinkerBasic(CreateOrGetStat<StatAttribute>(StatType.Strength), 1f));
+            inventory.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Strength), 1f));
             inventory.UpdateLinkers();
             #endregion
         }
@@ -113,7 +113,7 @@ namespace Systems.StatSystem
         //Only way to make regen stats work
         void RegenStats()
         {
-            foreach (var i in GetAllRegeneratingStats())
+            foreach (var i in GetAllRegeneratingStats)
             {
                 if (i.StatCurrentValue != i.StatValue)
                 {
