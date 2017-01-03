@@ -9,7 +9,7 @@ namespace Systems.StatSystem
     ///     then in the configure stats part - define what kind of base stats and linked attributes
     ///     a warrior would have
     /// </summary>
-    public class BaseStatCollection : StatCollection
+    public class ExampleStatCollection : StatCollection
     {
         protected override void ConfigureStats()
         {
@@ -39,7 +39,7 @@ namespace Systems.StatSystem
             /*
             The amount of health the entity has available
             */
-            var health = CreateOrGetStat<StatRegen>(StatType.Health);
+            var health = CreateOrGetStat<StatRegeneratable>(StatType.Health);
             health.StatName = "Health";
             health.StatBaseValue = 100;
             health.BaseSecondsPerPoint = 100;
@@ -53,7 +53,7 @@ namespace Systems.StatSystem
             /*
             The amount of magic the entity can use
             */
-            var magic = CreateOrGetStat<StatRegen>(StatType.Magic);
+            var magic = CreateOrGetStat<StatRegeneratable>(StatType.Magic);
             magic.StatName = "Magic";
             magic.StatBaseValue = 10;
             magic.BaseSecondsPerPoint = 10;
@@ -62,7 +62,7 @@ namespace Systems.StatSystem
             /*
             The amount of mana the entity can use
             */
-            var mana = CreateOrGetStat<StatRegen>(StatType.Mana);
+            var mana = CreateOrGetStat<StatRegeneratable>(StatType.Mana);
             mana.StatName = "Mana";
             mana.StatBaseValue = 100;
             mana.BaseSecondsPerPoint = 10;

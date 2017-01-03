@@ -3,12 +3,13 @@ using UnityEngine;
 using System.Collections;
 using Systems.StatSystem;
 using Systems.EntitySystem;
+using Systems.Config;
 
 namespace Systems.EntitySystem.Editor
 {
     public class EntityEditor : EditorWindow
     {
-        [MenuItem("Window/Systems/Entity Database %#E")]
+        [MenuItem("Window/Systems/Entity Editor %#E")]
         static public void ShowWindow()
         {
             var window = GetWindow<EntityEditor>();
@@ -45,7 +46,7 @@ namespace Systems.EntitySystem.Editor
 
             for (int i = 0; i < EntityDatabase.GetAssetCount(); i++)
             {
-                var asset = EntityDatabase.GetAt(i);
+                EntityAsset asset = EntityDatabase.GetAt(i);
                 if(asset != null)
                 {
                     GUILayout.BeginHorizontal(EditorStyles.toolbar);
@@ -105,16 +106,13 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.Label("Player Type", GUILayout.Width(80));
                         asset.PType = (PlayerType)EditorGUILayout.EnumPopup(asset.PType);
                         GUILayout.EndHorizontal();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Stat Collection Type", GUILayout.Width(80));
-                        asset.Collection = EditorGUILayout.ObjectField(asset.Collection, typeof(StatCollection), false) as StatCollection;
-                        GUILayout.EndHorizontal();
-
+                        
                         GUILayout.EndVertical();  //d
 
                         GUILayout.EndHorizontal();  //b
                         GUILayout.EndVertical();  //a
+
+                        
 
                         if (EditorGUI.EndChangeCheck())
                         {
@@ -131,10 +129,6 @@ namespace Systems.EntitySystem.Editor
             {
                 var newAsset = new EntityAsset(EntityDatabase.Instance.GetNextId());
                 EntityDatabase.Instance.Add(newAsset);
-            }
-            if (GUILayout.Button("Generate Prefab Folder", EditorStyles.toolbarButton))
-            {
-
             }
             GUILayout.EndHorizontal();
         }

@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Systems.StatSystem
 {
-    public interface IStatRegen
+    public interface IStatRegeneratable
     {
         int SecondsPerPoint { get; set; }
 

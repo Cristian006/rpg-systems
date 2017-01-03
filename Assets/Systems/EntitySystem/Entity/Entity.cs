@@ -9,19 +9,23 @@ namespace Systems.EntitySystem
     {
         public EntityData()
         {
-
+            entityName = string.Empty;
+            entityClass = EntityClass.None;
+            playerType = PlayerType.None;
         }
 
         public EntityData(EntityAsset entityAsset)
         {
             entityName = entityAsset.Name;
+            entityDescription = entityAsset.Description;
             entityClass = entityAsset.EClass;
             playerType = entityAsset.PType;
+            entityImage = entityAsset.Icon;
         }
 
         public Sprite entityImage;
         public string entityName;
-        public string Description;
+        public string entityDescription;
         public EntityClass entityClass;
         public PlayerType playerType;
 
@@ -31,6 +35,7 @@ namespace Systems.EntitySystem
     {
         private StatCollection stats;
         private EntityLevel level;
+        private EntityData data;
 
         public StatCollection Stats
         {
@@ -62,7 +67,20 @@ namespace Systems.EntitySystem
             }
         }
 
-        public EntityData data = new EntityData();
+        public EntityData Data {
+            get
+            {
+                if(data == null)
+                {
+                    data = new EntityData();
+                }
+                return data;
+            }
+            set
+            {
+                data = value;
+            }
+        } 
 
         void Awake()
         {
@@ -93,12 +111,12 @@ namespace Systems.EntitySystem
 
         public void RestoreHealth(int amount)
         {
-            stats.GetStat<StatRegen>(StatType.Health).StatCurrentValue += amount;
+            stats.GetStat<StatRegeneratable>(StatType.Health).StatCurrentValue += amount;
         }
 
         public void RestoreHealth()
         {
-            stats.GetStat<StatRegen>(StatType.Health).RestoreCurrentValueToMax();
+            stats.GetStat<StatRegeneratable>(StatType.Health).RestoreCurrentValueToMax();
         }
     }
 }

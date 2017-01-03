@@ -47,7 +47,7 @@ public class StatSystemUI : MonoBehaviour {
         //Adding ourselves to the callbacks
         entity.Level.OnEntityExpGain += OnExpGain;
         entity.Level.OnEntityLevelChange += OnLevelGain;
-        entity.Stats.GetStat<StatRegen>(StatType.Health).OnCurrentValueChanged += OnHealthChange;
+        entity.Stats.GetStat<StatRegeneratable>(StatType.Health).OnCurrentValueChanged += OnHealthChange;
         entity.Stats.GetStat<StatVital>(StatType.Magic).OnCurrentValueChanged += OnMagicChange;
         entity.Stats.GetStat<StatVital>(StatType.Mana).OnCurrentValueChanged += OnManaChange;
         entity.Stats.GetStat<StatVital>(StatType.Armor).OnCurrentValueChanged += OnArmorChange;
@@ -71,8 +71,8 @@ public class StatSystemUI : MonoBehaviour {
         //setting the bars default values
         exp.bar.maxValue = entity.Level.ExpRequired;
         exp.bar.value = entity.Level.ExpCurrent;
-        health.bar.maxValue = entity.Stats.GetStat<StatRegen>(StatType.Health).StatValue;
-        health.bar.value = entity.Stats.GetStat<StatRegen>(StatType.Health).StatCurrentValue;
+        health.bar.maxValue = entity.Stats.GetStat<StatRegeneratable>(StatType.Health).StatValue;
+        health.bar.value = entity.Stats.GetStat<StatRegeneratable>(StatType.Health).StatCurrentValue;
         invent.bar.maxValue = entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatValue;
         invent.bar.value = entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue;
         magic.bar.maxValue = entity.Stats.GetStat<StatVital>(StatType.Magic).StatValue;
@@ -91,8 +91,8 @@ public class StatSystemUI : MonoBehaviour {
             entity.Level.ExpRequired,
             entity.Level.Level);
         health.text.text = string.Format("HP {0} / {1}",
-            entity.Stats.GetStat<StatRegen>(StatType.Health).StatCurrentValue,
-            entity.Stats.GetStat<StatRegen>(StatType.Health).StatValue);
+            entity.Stats.GetStat<StatRegeneratable>(StatType.Health).StatCurrentValue,
+            entity.Stats.GetStat<StatRegeneratable>(StatType.Health).StatValue);
         invent.text.text = string.Format("INVN {0} / {1}",
             entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue,
             entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatValue);
@@ -147,7 +147,7 @@ public class StatSystemUI : MonoBehaviour {
         {
             if (entity.Stats.ContainsStat(i))
             {
-                var s = entity.Stats.GetStat<StatRegen>(i);
+                var s = entity.Stats.GetStat<StatRegeneratable>(i);
                 if(s != null)
                 {
                     b += string.Format("<b>{0}</b>\nRegen Amount: {1:F}+ per sec.\nMaxValue: {2}\nBase Value: {3}\nCurrent Value: {4}\nLevel Value: {5}\nLinker Value: {6}\nEffected By:",
@@ -271,7 +271,7 @@ public class StatSystemUI : MonoBehaviour {
 
     void OnHealthChange(object sender, EventArgs args)
     {
-        var h = entity.Stats.GetStat<StatRegen>(StatType.Health);
+        var h = entity.Stats.GetStat<StatRegeneratable>(StatType.Health);
         health.bar.maxValue = h.StatValue;
         health.bar.value = h.StatCurrentValue;
         health.text.text = string.Format("HP {0} / {1}",

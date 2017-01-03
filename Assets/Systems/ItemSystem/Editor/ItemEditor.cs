@@ -7,7 +7,7 @@ namespace Systems.ItemSystem.Editor
 {
     public partial class ItemEditor : EditorWindow
     {
-        [MenuItem("Window/Systems/Item Database %#I")]
+        [MenuItem("Window/Systems/Item Editor %#I")]
         static public void ShowWindow()
         {
             var window = GetWindow<ItemEditor>();

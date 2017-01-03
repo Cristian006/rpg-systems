@@ -19,13 +19,9 @@ public class CharacterSelectionManager : MonoBehaviour
         GameObject temp;
         for(int i = 0; i < EntityDatabase.Instance.Count; i++)
         {
-            temp = Instantiate<GameObject>(cPanel);
-            temp.AddComponent<BaseLevel>();
-            temp.AddComponent<StatCollection>();
+            temp = Instantiate(cPanel);
             temp.transform.SetParent(parent.transform);
-            temp.GetComponent<CharacterPanel>().myEntity.data = EntityDatabase.GetDataFromAsset(EntityDatabase.Instance.GetAtIndex(i));
-
+            temp.GetComponent<CharacterPanel>().myEntity.Data = EntityDatabase.GetDataFromAsset(EntityDatabase.Instance.GetAtIndex(i));
         }
     }
-    
 }

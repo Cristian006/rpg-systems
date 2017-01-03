@@ -19,7 +19,7 @@ namespace Systems.StatSystem
             - regen amount per second .5 pt
                 (every two seconds the stat will regenerate a single stat point)
     */
-    public class StatRegen : StatVital, IStatRegen
+    public class StatRegeneratable : StatVital, IStatRegeneratable
     {
         private int _baseSecondsPerPoint;
         private int _secondsPerPoint;
@@ -28,13 +28,14 @@ namespace Systems.StatSystem
         private float _linkMultiplier = 1.2f;
         //TODO: LINKER VARIABLES TO REGEN AMOUNT so when linked it can change not the stat value but the secondary stat - seconds per point which I started implementing in Stat Linker class but haven't finished
 
-        #region Properties - Getters/Setters
-        public StatRegen()
+        #region Constructors
+        public StatRegeneratable()
         {
             TimeForNextRegen = 0;
         }
         #endregion
 
+        #region Properties - Getters/Setters
         /// <summary>
         /// The amount of time required to regen 1 point
         /// </summary>
@@ -115,6 +116,7 @@ namespace Systems.StatSystem
                 _timeForNextRegen = value;
             }
         }
+        #endregion
 
         //regenerate the point
         public void Regenerate()

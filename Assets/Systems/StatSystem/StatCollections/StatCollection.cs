@@ -273,21 +273,32 @@ namespace Systems.StatSystem
         /// Returns a List of all regenerating stats
         /// </summary>
         /// <returns></returns>
-        public List<StatRegen> GetAllRegeneratingStats()
+        public List<StatRegeneratable> GetAllRegeneratingStats()
         {
-            List<StatRegen> re = new List<StatRegen>();
+            List<StatRegeneratable> re = new List<StatRegeneratable>();
 
             //INTERFACE CHECKING FOR STAT REGEN ABILITY
             foreach (var i in StatDict.Keys)
             {
                 var stat = this[(StatType)i];
-                IStatRegen s = stat as IStatRegen;
+                IStatRegeneratable s = stat as IStatRegeneratable;
                 if(s != null)
                 {
-                    re.Add(stat as StatRegen);
+                    re.Add(stat as StatRegeneratable);
                 }
             }
             return re;
+        }
+
+        public override string ToString()
+        {
+            string i = string.Empty;
+            foreach (var key in StatDict.Keys)
+            {
+                var stat = this[key];
+                i += key.ToString() + " - " + stat.StatName + ": " + stat.StatValue + "\n";
+            }
+            return i;
         }
     }
 }

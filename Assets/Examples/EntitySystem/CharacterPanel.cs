@@ -2,12 +2,14 @@
 using UnityEngine.UI;
 using System.Collections;
 using Systems.EntitySystem;
+using Systems.StatSystem;
 
 [System.Serializable]
 public class Info
 {
     public Text name;
     public Text info;
+    public Text stats;
     public Image sprite;
 }
 
@@ -54,9 +56,53 @@ public class CharacterPanel : MonoBehaviour
 
     public void Initialize()
     {
-        info.name.text = entity.data.entityName;
+        info.name.text = entity.Data.entityName;
+        info.info.text = entity.Data.entityDescription;
+        info.sprite.sprite = entity.Data.entityImage;
+        getCollection();
+        info.stats.text = "<b>" + entity.Data.entityClass.ToString()  + "</b>\n" + entity.Stats.ToString();
+    }
 
-        //info.info.text = entity.level.ToString();
-        info.sprite.sprite = entity.data.entityImage;
+    public void getCollection()
+    {
+        switch (entity.Data.entityClass)
+        {
+            case EntityClass.None:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Alchemist:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Assassin:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Barbarian:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Oracle:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Ninja:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Scout:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Sorcerer:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Warrior:
+                gameObject.AddComponent<WarriorStatCollection>();
+                break;
+            case EntityClass.Wizard:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            case EntityClass.Warlord:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+            default:
+                gameObject.AddComponent<ExampleStatCollection>();
+                break;
+        }
     }
 }
