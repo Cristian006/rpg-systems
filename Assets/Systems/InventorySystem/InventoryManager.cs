@@ -321,6 +321,27 @@ namespace Systems.InventorySystem
         #endregion
 
         #region EQUIPPING METHODS
+        //check if there is another weapon in inventory to equip
+        public bool checkForWeapon(bool primary)
+        {
+            int currentIndex = primary ? (PrimarySlotEquipped ? PrimaryIndex : 0) : (SecondarySlotEquipped ? SecondaryIndex : 0);
+
+            int inventoryCount = inventory.Count;
+
+            for (int i = currentIndex + 1; i < (inventoryCount * 2); i++)
+            {
+                int ii = (i % inventoryCount);
+                if (Weapons.Objects[(ii)].IType == ItemType.Weapon)
+                {
+                    if (((Weapon)Weapons.Objects[(ii)]).WeaponType == (primary ? WeaponType.Primary : WeaponType.Secondary))
+                    {
+                        return ii == currentIndex ? false : true;
+                    }
+                }
+            }
+            return false;
+        }
+        
         public bool isEquipped(Item item)
         {
             switch (item.IType)
