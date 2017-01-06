@@ -67,37 +67,37 @@ public class CharacterPanel : MonoBehaviour
     {
         switch (entity.Data.entityClass)
         {
-            case EntityClass.None:
+            case EntityType.None:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Alchemist:
+            case EntityType.Alchemist:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Assassin:
+            case EntityType.Assassin:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Barbarian:
+            case EntityType.Barbarian:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Oracle:
+            case EntityType.Oracle:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Ninja:
+            case EntityType.Ninja:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Scout:
+            case EntityType.Scout:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Sorcerer:
+            case EntityType.Sorcerer:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Warrior:
+            case EntityType.Warrior:
                 gameObject.AddComponent<WarriorStatCollection>();
                 break;
-            case EntityClass.Wizard:
+            case EntityType.Wizard:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
-            case EntityClass.Warlord:
+            case EntityType.Warlord:
                 gameObject.AddComponent<ExampleStatCollection>();
                 break;
             default:

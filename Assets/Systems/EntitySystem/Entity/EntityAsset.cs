@@ -13,7 +13,7 @@ namespace Systems.EntitySystem
         [SerializeField]
         string description;
         [SerializeField]
-        EntityClass entityClass;
+        EntityType entityClass;
         [SerializeField]
         PlayerType playerType;
 
@@ -22,7 +22,7 @@ namespace Systems.EntitySystem
         {
             Icon = null;
             Description = string.Empty;
-            EClass = EntityClass.None;
+            EClass = EntityType.None;
             PType = PlayerType.None;
         }
 
@@ -30,7 +30,7 @@ namespace Systems.EntitySystem
         {
             Icon = null;
             Description = string.Empty;
-            EClass = EntityClass.None;
+            EClass = EntityType.None;
             PType = PlayerType.None;
         }
 
@@ -38,11 +38,11 @@ namespace Systems.EntitySystem
         {
             Icon = null;
             Description = string.Empty;
-            EClass = EntityClass.None;
+            EClass = EntityType.None;
             PType = PlayerType.None;
         }
 
-        public EntityAsset(int id, string name, string description, EntityClass entityClass, PlayerType playerType) : base (id, name)
+        public EntityAsset(int id, string name, string description, EntityType entityClass, PlayerType playerType) : base (id, name)
         {
             Icon = null;
             Description = description;
@@ -71,7 +71,7 @@ namespace Systems.EntitySystem
             set { icon = value; }
         }
 
-        public EntityClass EClass
+        public EntityType EClass
         {
             get
             {

@@ -99,6 +99,30 @@ namespace Systems.InventorySystem
                 _tertiaryIndex = value;
             }
         }
+
+        public bool PrimarySlotEquipped
+        {
+            get
+            {
+                return PrimaryIndex >= 0 ? true : false;
+            }
+        }
+
+        public bool SecondarySlotEquipped
+        {
+            get
+            {
+                return SecondaryIndex >= 0 ? true : false;
+            }
+        }
+
+        public bool TertiarySlotEquipped
+        {
+            get
+            {
+                return TertiaryIndex >= 0 ? true : false;
+            }
+        }
         #endregion
 
         #region PROPERTIES
@@ -321,6 +345,7 @@ namespace Systems.InventorySystem
 
         /// <summary>
         /// Equip an Item
+        /// false to unequip
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="item"></param>

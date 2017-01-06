@@ -10,7 +10,7 @@ namespace Systems.EntitySystem
         public EntityData()
         {
             entityName = string.Empty;
-            entityClass = EntityClass.None;
+            entityClass = EntityType.None;
             playerType = PlayerType.None;
         }
 
@@ -26,7 +26,7 @@ namespace Systems.EntitySystem
         public Sprite entityImage;
         public string entityName;
         public string entityDescription;
-        public EntityClass entityClass;
+        public EntityType entityClass;
         public PlayerType playerType;
 
     }

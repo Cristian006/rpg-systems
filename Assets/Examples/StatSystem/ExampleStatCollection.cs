@@ -104,26 +104,5 @@ namespace Systems.StatSystem
             inventory.UpdateLinkers();
             #endregion
         }
-
-        void FixedUpdate()
-        {
-            RegenStats();
-        }
-
-        //Only way to make regen stats work
-        void RegenStats()
-        {
-            foreach (var i in GetAllRegeneratingStats)
-            {
-                if (i.StatCurrentValue != i.StatValue)
-                {
-                    if (Time.time > i.TimeForNextRegen)
-                    {
-                        i.Regenerate();
-                        i.TimeForNextRegen = Time.time + i.SecondsPerPoint;
-                    }
-                }
-            }
-        }
     }
 }

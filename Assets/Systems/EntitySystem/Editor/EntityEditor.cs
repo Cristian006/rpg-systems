@@ -99,7 +99,7 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.EndHorizontal(); //f
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Entity Class", GUILayout.Width(80));
-                        asset.EClass = (EntityClass)EditorGUILayout.EnumPopup(asset.EClass);
+                        asset.EClass = (EntityType)EditorGUILayout.EnumPopup(asset.EClass);
                         GUILayout.EndHorizontal();
 
                         GUILayout.BeginHorizontal();

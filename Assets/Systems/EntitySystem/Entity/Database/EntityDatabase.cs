@@ -6,7 +6,7 @@ namespace Systems.EntitySystem
 {
     public class EntityDatabase : BaseDatabase<EntityAsset>
     {
-        const string DatabasePath = @"Resources/Systems/EntitySystem/Databases/";
+        const string DatabasePath = @"Resources/Systems/EntitySystem/Database/";
         const string DatabaseName = @"EntityDatabase.asset";
 
         private static EntityDatabase _instance = null;
