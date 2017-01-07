@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
-using System.Collections.Generic;
 using Systems.ItemSystem;
-using Systems.StatSystem;
 using Systems.EntitySystem;
 
 //TODO: Event handlers for weapon change
 namespace Systems.InventorySystem
 {
-    public class InventoryManager : MonoBehaviour
+    public abstract class InventoryManager : MonoBehaviour
     {
         [SerializeField]
         private Entity entity;
@@ -38,7 +35,7 @@ namespace Systems.InventorySystem
         {
             get
             {
-                if(_inventory == null)
+                if (_inventory == null)
                 {
                     _inventory = new Inventory();
                 }
@@ -188,12 +185,9 @@ namespace Systems.InventorySystem
         /// <summary>
         /// The inventory's Max Weight
         /// </summary>
-        public int MaxWeight
+        public abstract int MaxWeight
         {
-            get
-            {
-                return MyEntity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatValue;
-            }
+            get;
         }
 
         /// <summary>
@@ -226,7 +220,7 @@ namespace Systems.InventorySystem
         /// <param name="item"></param>
         public void Add<T>(T item) where T : Item
         {
-            if(item.Weight <= AvailableWeight)
+            if (item.Weight <= AvailableWeight)
             {
                 inventory.Objects<T>().Add(item);
                 TriggerOnItemAdded(true);
@@ -326,7 +320,7 @@ namespace Systems.InventorySystem
             switch (item.IType)
             {
                 case ItemType.Weapon:
-                    if((item as Weapon).WeaponType == WeaponType.Primary)
+                    if ((item as Weapon).WeaponType == WeaponType.Primary)
                     {
                         return PrimaryIndex == Weapons.Objects.IndexOf((Weapon)item);
                     }
@@ -383,7 +377,7 @@ namespace Systems.InventorySystem
                 Debug.Log("CANNOT EQUIP THIS TYPE OF ITEM");
             }
         }
-        
+
         public void Equip<T>(T item, int index) where T : Item
         {
             Equip<T>(item, index, true);
@@ -410,7 +404,7 @@ namespace Systems.InventorySystem
         #region EVENT HANDLERS
         void TriggerPrimaryChange()
         {
-            if(OnPrimaryChange != null)
+            if (OnPrimaryChange != null)
             {
                 OnPrimaryChange(this, null);
             }
@@ -447,7 +441,7 @@ namespace Systems.InventorySystem
                     OnItemAddedFailure(this, null);
                 }
             }
-            
+
         }
 
         void TriggerOnItemRemoved(bool itemWasRemoved)
@@ -462,17 +456,17 @@ namespace Systems.InventorySystem
             }
             else
             {
-                if(OnItemRemovdFailure != null)
+                if (OnItemRemovdFailure != null)
                 {
                     OnItemRemovedSuccess(this, null);
                 }
             }
-            
+
         }
 
         void TriggerInventoryChange()
         {
-            if(OnInventoryChange!= null)
+            if (OnInventoryChange != null)
             {
                 OnInventoryChange(this, null);
             }
@@ -480,7 +474,7 @@ namespace Systems.InventorySystem
 
         void TriggerOnEquippedChange()
         {
-            if(OnEquippedChange != null)
+            if (OnEquippedChange != null)
             {
                 OnEquippedChange(this, null);
             }

@@ -31,7 +31,9 @@ namespace Systems.EntitySystem
 
     }
 
-    public class Entity : MonoBehaviour
+    //Entity is simply a script that has an associated StatCollection
+    //Gives children a method to get the stats it needs
+    public abstract class Entity : MonoBehaviour
     {
         private StatCollection stats;
         private EntityLevel level;
@@ -41,7 +43,7 @@ namespace Systems.EntitySystem
         {
             get
             {
-                if(stats == null)
+                if (stats == null)
                 {
                     stats = GetComponent<StatCollection>();
                 }
@@ -55,7 +57,7 @@ namespace Systems.EntitySystem
         {
             get
             {
-                if(level == null)
+                if (level == null)
                 {
                     level = GetComponent<EntityLevel>();
                 }
@@ -67,10 +69,11 @@ namespace Systems.EntitySystem
             }
         }
 
-        public EntityData Data {
+        public EntityData Data
+        {
             get
             {
-                if(data == null)
+                if (data == null)
                 {
                     data = new EntityData();
                 }
@@ -80,43 +83,14 @@ namespace Systems.EntitySystem
             {
                 data = value;
             }
-        } 
-
-        void Awake()
-        {
-            
         }
 
-        public void TakeDamage(int amount)
+        protected T GetStat<T>(StatType type) where T : Stat
         {
-            if (stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue > 0)
-            {
-                int amountToTakeFromArmor = (int)(amount * (0.01f * stats.GetStat<StatAttribute>(StatType.ArmorProtection).StatValue));
-                int amountToTakeFromHealth = (amount - amountToTakeFromArmor);
-                int amountLeft = 0;
-
-                if (stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue >= amountToTakeFromArmor)
-                {
-                    stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue -= amountToTakeFromArmor;
-                }
-                else
-                {
-                    amountLeft = amountToTakeFromArmor - stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue;
-                    stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue = 0;
-                }
-
-                stats.GetStat<StatVital>(StatType.Health).StatCurrentValue -= (amountToTakeFromHealth + amountLeft);
-            }
+            return stats.GetStat<T>(type);
         }
 
-        public void RestoreHealth(int amount)
-        {
-            stats.GetStat<StatRegeneratable>(StatType.Health).StatCurrentValue += amount;
-        }
-
-        public void RestoreHealth()
-        {
-            stats.GetStat<StatRegeneratable>(StatType.Health).RestoreCurrentValueToMax();
-        }
+        //require children to initialize
+        protected abstract void Awake();
     }
 }
