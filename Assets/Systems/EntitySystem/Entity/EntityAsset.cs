@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Systems.Utility.Database;
 using Systems.StatSystem;
 
@@ -13,6 +14,8 @@ namespace Systems.EntitySystem
         [SerializeField]
         string description;
         [SerializeField]
+        List<string> defaultInventory;
+        [SerializeField]
         EntityType entityClass;
         [SerializeField]
         PlayerType playerType;
@@ -22,6 +25,7 @@ namespace Systems.EntitySystem
         {
             Icon = null;
             Description = string.Empty;
+            defaultInventory = new List<string>();
             EClass = EntityType.None;
             PType = PlayerType.None;
         }
@@ -30,6 +34,7 @@ namespace Systems.EntitySystem
         {
             Icon = null;
             Description = string.Empty;
+            defaultInventory = new List<string>();
             EClass = EntityType.None;
             PType = PlayerType.None;
         }
@@ -38,6 +43,7 @@ namespace Systems.EntitySystem
         {
             Icon = null;
             Description = string.Empty;
+            defaultInventory = new List<string>();
             EClass = EntityType.None;
             PType = PlayerType.None;
         }
@@ -46,6 +52,16 @@ namespace Systems.EntitySystem
         {
             Icon = null;
             Description = description;
+            defaultInventory = new List<string>();
+            EClass = entityClass;
+            PType = playerType;
+        }
+
+        public EntityAsset(int id, string name, string description, List<string> inventory, EntityType entityClass, PlayerType playerType) : base(id, name)
+        {
+            Icon = null;
+            Description = description;
+            defaultInventory = inventory;
             EClass = entityClass;
             PType = playerType;
         }
@@ -69,6 +85,18 @@ namespace Systems.EntitySystem
         {
             get { return icon; }
             set { icon = value; }
+        }
+
+        public List<string> DefualtInventory
+        {
+            get
+            {
+                return defaultInventory;
+            }
+            set
+            {
+                defaultInventory = value;
+            }
         }
 
         public EntityType EClass

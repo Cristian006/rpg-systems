@@ -28,13 +28,13 @@ namespace Systems.StatSystem
         #endregion
 
         #region Properties - Getters/Setters
-        public int StatCurrentValue
+        public int CurrentValue
         {
             get
             {
-                if (_statCurrentValue > StatValue)
+                if (_statCurrentValue > Value)
                 {
-                    _statCurrentValue = StatValue;
+                    _statCurrentValue = Value;
                 }
                 else if (_statCurrentValue < 0)
                 {
@@ -55,7 +55,7 @@ namespace Systems.StatSystem
 
         public void RestoreCurrentValueToMax()
         {
-            StatCurrentValue = StatValue;
+            CurrentValue = Value;
         }
 
         private void TriggerCurrentValueChange()

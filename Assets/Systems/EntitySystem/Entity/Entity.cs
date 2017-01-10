@@ -102,29 +102,29 @@ namespace Systems.EntitySystem
 
         public void TakeDamage(int amount)
         {
-            if (stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue > 0)
+            if (stats.GetStat<StatVital>(StatType.Armor).CurrentValue > 0)
             {
-                int amountToTakeFromArmor = (int)(amount * (0.01f * stats.GetStat<StatAttribute>(StatType.ArmorProtection).StatValue));
+                int amountToTakeFromArmor = (int)(amount * (0.01f * stats.GetStat<StatAttribute>(StatType.ArmorProtection).Value));
                 int amountToTakeFromHealth = (amount - amountToTakeFromArmor);
                 int amountLeft = 0;
 
-                if (stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue >= amountToTakeFromArmor)
+                if (stats.GetStat<StatVital>(StatType.Armor).CurrentValue >= amountToTakeFromArmor)
                 {
-                    stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue -= amountToTakeFromArmor;
+                    stats.GetStat<StatVital>(StatType.Armor).CurrentValue -= amountToTakeFromArmor;
                 }
                 else
                 {
-                    amountLeft = amountToTakeFromArmor - stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue;
-                    stats.GetStat<StatVital>(StatType.Armor).StatCurrentValue = 0;
+                    amountLeft = amountToTakeFromArmor - stats.GetStat<StatVital>(StatType.Armor).CurrentValue;
+                    stats.GetStat<StatVital>(StatType.Armor).CurrentValue = 0;
                 }
 
-                stats.GetStat<StatVital>(StatType.Health).StatCurrentValue -= (amountToTakeFromHealth + amountLeft);
+                stats.GetStat<StatVital>(StatType.Health).CurrentValue -= (amountToTakeFromHealth + amountLeft);
             }
         }
 
         public void RestoreHealth(int amount)
         {
-            stats.GetStat<StatRegeneratable>(StatType.Health).StatCurrentValue += amount;
+            stats.GetStat<StatRegeneratable>(StatType.Health).CurrentValue += amount;
         }
 
         public void RestoreHealth()
