@@ -6,20 +6,20 @@ namespace Systems.StatSystem
     public class Stat
     {
         private string _statName;
-        private int _statBaseValue;
+        private int _baseValue;
 
         #region Constructors
         public Stat()
         {
             //empty constructor
             StatName = string.Empty;
-            StatBaseValue = 0;
+            Base = 0;
         }
 
         public Stat(string name, int val)
         {
             StatName = name;
-            StatBaseValue = val;
+            Base = val;
         }
         #endregion
 
@@ -30,21 +30,21 @@ namespace Systems.StatSystem
             set { _statName = value; }
         }
 
-        public virtual int StatValue
+        public virtual int Value
         {
-            get { return StatBaseValue; }
+            get { return Base; }
         }
 
-        public virtual int StatBaseValue
+        public virtual int Base
         {
-            get { return _statBaseValue; }
-            set { _statBaseValue = value; }
+            get { return _baseValue; }
+            set { _baseValue = value; }
         }
         #endregion
 
         public override string ToString()
         {
-            return "Stat: " + StatName + " Value: " + StatValue;
+            return "Stat: " + StatName + " Value: " + Value;
         }
     }
 }

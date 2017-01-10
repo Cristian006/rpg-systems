@@ -31,16 +31,16 @@ namespace Systems.StatSystem
 
         #region Properties - Getters/Setters
         //the stats new value is the total modValue added to the stats base value
-        public override int StatValue
+        public override int Value
         {
             get
             {
-                return base.StatValue + StatModifierValue;
+                return base.Value + Modifier;
             }
         }
 
         //the stats current mod value of added modifiers
-        public int StatModifierValue
+        public int Modifier
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Systems.StatSystem
                 }
 
                 //getting the effected mod value and adding it to the total modified value of the stat
-                _statModValue += group.First().ApplyModifier(StatBaseValue + _statModValue, (sum > max) ? sum : max);
+                _statModValue += group.First().ApplyModifier(Base + _statModValue, (sum > max) ? sum : max);
             }
 
             //Trigger the event that this stats overall value changed

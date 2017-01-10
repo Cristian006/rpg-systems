@@ -4,7 +4,7 @@ namespace Systems.StatSystem
 {
     public interface IStatLinkable
     {
-        int StatLinkerValue { get; }
+        int Linker { get; }
 
         void AddLinker(StatLinker linker);
         void ClearLinkers();

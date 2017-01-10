@@ -16,46 +16,52 @@ namespace Systems.StatSystem
     */
     public class StatVital : StatAttribute, IStatCurrentValueChanged
     {
-        private int _statCurrentValue; //the stats current value
+        private int _value; //the stats current value
 
         public event EventHandler OnCurrentValueChanged; //event for when the stat value changes  
 
         #region Constructors 
         public StatVital()
         {
-            _statCurrentValue = 0;
+            _value = 0;
         }
         #endregion
 
         #region Properties - Getters/Setters
-        public int StatCurrentValue
+        new public int Value
         {
             get
             {
-                if (_statCurrentValue > StatValue)
+                if (_value > base.Value)
                 {
-                    _statCurrentValue = StatValue;
+                    _value = base.Value;
                 }
-                else if (_statCurrentValue < 0)
+                else if (_value < 0)
                 {
-                    _statCurrentValue = 0;
+                    _value = 0;
                 }
-                return _statCurrentValue;
+                return _value;
             }
             set
             {
-                if (_statCurrentValue != value)
+                if (_value != value)
                 {
-                    _statCurrentValue = value;
+                    _value = value;
                     TriggerCurrentValueChange();
                 }
             }
+        }
+
+        public int Max
+        {
+            get { return base.Value; }
+            set { base.Base = value; }
         }
         #endregion
 
         public void RestoreCurrentValueToMax()
         {
-            StatCurrentValue = StatValue;
+            Value = base.Value;
         }
 
         private void TriggerCurrentValueChange()
