@@ -12,30 +12,30 @@ namespace Systems.StatSystem
         public Stat()
         {
             //empty constructor
-            StatName = string.Empty;
-            StatBaseValue = 0;
+            Name = string.Empty;
+            Base = 0;
         }
 
         public Stat(string name, int val)
         {
-            StatName = name;
-            StatBaseValue = val;
+            Name = name;
+            Base = val;
         }
         #endregion
 
         #region Properties - Getters/Setters
-        public string StatName
+        public string Name
         {
             get { return _statName; }
             set { _statName = value; }
         }
 
-        public virtual int StatValue
+        public virtual int Value
         {
-            get { return StatBaseValue; }
+            get { return Base; }
         }
 
-        public virtual int StatBaseValue
+        public virtual int Base
         {
             get { return _statBaseValue; }
             set { _statBaseValue = value; }
@@ -44,7 +44,7 @@ namespace Systems.StatSystem
 
         public override string ToString()
         {
-            return "Stat: " + StatName + " Value: " + StatValue;
+            return "Stat: " + Name + " Value: " + Value;
         }
     }
 }

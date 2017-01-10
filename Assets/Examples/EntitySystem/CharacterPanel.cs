@@ -60,12 +60,12 @@ public class CharacterPanel : MonoBehaviour
         info.info.text = entity.Data.entityDescription;
         info.sprite.sprite = entity.Data.entityImage;
         getCollection();
-        info.stats.text = "<b>" + entity.Data.entityClass.ToString()  + "</b>\n" + entity.Stats.ToString();
+        info.stats.text = "<b>" + entity.Data.entityType.ToString()  + "</b>\n" + entity.Stats.ToString();
     }
 
     public void getCollection()
     {
-        switch (entity.Data.entityClass)
+        switch (entity.Data.entityType)
         {
             case EntityType.None:
                 gameObject.AddComponent<ExampleStatCollection>();

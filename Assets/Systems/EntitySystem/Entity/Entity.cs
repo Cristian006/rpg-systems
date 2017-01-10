@@ -2,7 +2,7 @@
 using Systems.StatSystem;
 using UnityEngine.UI;
 using System.Collections;
-
+using Systems.EntitySystem.Interfaces;
 namespace Systems.EntitySystem
 {
     public class EntityData
@@ -10,7 +10,7 @@ namespace Systems.EntitySystem
         public EntityData()
         {
             entityName = string.Empty;
-            entityClass = EntityType.None;
+            entityType = EntityType.None;
             playerType = PlayerType.None;
         }
 
@@ -18,7 +18,7 @@ namespace Systems.EntitySystem
         {
             entityName = entityAsset.Name;
             entityDescription = entityAsset.Description;
-            entityClass = entityAsset.EClass;
+            entityType = entityAsset.EClass;
             playerType = entityAsset.PType;
             entityImage = entityAsset.Icon;
         }
@@ -26,18 +26,19 @@ namespace Systems.EntitySystem
         public Sprite entityImage;
         public string entityName;
         public string entityDescription;
-        public EntityType entityClass;
+        public EntityType entityType;
         public PlayerType playerType;
 
     }
 
     //Entity is simply a script that has an associated StatCollection
     //Gives children a method to get the stats it needs
-    public abstract class Entity : MonoBehaviour
+    public abstract class Entity : MonoBehaviour, ITarget
     {
         private StatCollection stats;
         private EntityLevel level;
         private EntityData data;
+        private Target _target;
 
         public StatCollection Stats
         {
@@ -51,6 +52,18 @@ namespace Systems.EntitySystem
                 return stats;
             }
             set { stats = value; }
+        }
+
+        public Target target
+        {
+            get
+            {
+                if (_target == null)
+                {
+                    _target = new Target();
+                }
+                return _target;
+            }
         }
 
         public EntityLevel Level
@@ -83,7 +96,7 @@ namespace Systems.EntitySystem
             {
                 data = value;
             }
-        }
+        } 
 
         protected T GetStat<T>(StatType type) where T : Stat
         {

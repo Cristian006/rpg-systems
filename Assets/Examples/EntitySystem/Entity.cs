@@ -29,30 +29,30 @@ namespace Systems.Example
         public virtual void TakeDamage(int amount)
         {
             {
-                if (GetStat<StatVital>(StatType.Armor).StatCurrentValue > 0)
+                if (GetStat<StatVital>(StatType.Armor).Value > 0)
                 {
-                    int amountToTakeFromArmor = (int)(amount * (0.01f * GetStat<StatAttribute>(StatType.ArmorProtection).StatValue));
+                    int amountToTakeFromArmor = (int)(amount * (0.01f * GetStat<StatAttribute>(StatType.ArmorProtection).Value));
                     int amountToTakeFromHealth = (amount - amountToTakeFromArmor);
                     int amountLeft = 0;
 
-                    if (GetStat<StatVital>(StatType.Armor).StatCurrentValue >= amountToTakeFromArmor)
+                    if (GetStat<StatVital>(StatType.Armor).Value >= amountToTakeFromArmor)
                     {
-                        GetStat<StatVital>(StatType.Armor).StatCurrentValue -= amountToTakeFromArmor;
+                        GetStat<StatVital>(StatType.Armor).Value -= amountToTakeFromArmor;
                     }
                     else
                     {
-                        amountLeft = amountToTakeFromArmor - GetStat<StatVital>(StatType.Armor).StatCurrentValue;
-                        GetStat<StatVital>(StatType.Armor).StatCurrentValue = 0;
+                        amountLeft = amountToTakeFromArmor - GetStat<StatVital>(StatType.Armor).Value;
+                        GetStat<StatVital>(StatType.Armor).Value = 0;
                     }
 
-                    GetStat<StatVital>(StatType.Health).StatCurrentValue -= (amountToTakeFromHealth + amountLeft);
+                    GetStat<StatVital>(StatType.Health).Value -= (amountToTakeFromHealth + amountLeft);
                 }
             }
         }
 
         public void RestoreHealth(int amount)
         {
-            GetStat<StatRegeneratable>(StatType.Health).StatCurrentValue += amount;
+            GetStat<StatRegeneratable>(StatType.Health).Value += amount;
         }
 
         public void RestoreHealth()

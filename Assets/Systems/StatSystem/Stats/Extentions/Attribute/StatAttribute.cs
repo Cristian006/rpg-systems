@@ -28,17 +28,17 @@ namespace Systems.StatSystem
         #endregion
 
         #region Properties - Getters/Setters
-        public override int StatBaseValue
+        public override int Base
         {
-            get { return base.StatBaseValue + StatLevelValue + StatLinkerValue; }
+            get { return base.Base + LevelValue + LinkerValue; }
         }
 
-        public int StatLevelValue
+        public int LevelValue
         {
             get { return _statLevelValue; }
         }
 
-        public int StatLinkerValue
+        public int LinkerValue
         {
             get
             {
@@ -50,7 +50,7 @@ namespace Systems.StatSystem
             }
         }
 
-        public List<StatLinker> StatLinkers
+        public List<StatLinker> Linkers
         {
             get { return _statLinkers; }
         }

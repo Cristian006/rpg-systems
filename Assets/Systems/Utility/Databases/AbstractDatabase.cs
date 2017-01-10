@@ -163,6 +163,33 @@ namespace Systems.Utility.Database
             return default(T);
         }
 
+        public int GetIndexOf(int id)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                var asset = GetAtIndex(i);
+                if (asset.ID == id)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int GetIndexOf(string name)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                var asset = GetAtIndex(i);
+                if (asset.Name == name)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+        
         public int GetFirstAvalibleId()
         {
             if (Count <= 0)
