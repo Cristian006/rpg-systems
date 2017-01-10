@@ -86,7 +86,7 @@ namespace Systems.StatSystem
         {
             foreach (var i in GetAllRegeneratingStats)
             {
-                if (i.StatCurrentValue != i.Value)
+                if (i.Max != i.Value)
                 {
                     if (Time.time > i.TimeForNextRegen)
                     {

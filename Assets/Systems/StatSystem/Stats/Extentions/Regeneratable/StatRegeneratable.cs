@@ -121,7 +121,7 @@ namespace Systems.StatSystem
         //regenerate the point
         public void Regenerate()
         {
-            StatCurrentValue++;
+            Value++;
             //bug.Log("REGENERATING " + StatName + ": " + StatCurrentValue);
         }
 
