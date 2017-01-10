@@ -6,20 +6,20 @@ namespace Systems.StatSystem
     public class Stat
     {
         private string _statName;
-        private int _statBaseValue;
+        private int _baseValue;
 
         #region Constructors
         public Stat()
         {
             //empty constructor
             Name = string.Empty;
-            BaseValue = 0;
+            Base = 0;
         }
 
         public Stat(string name, int val)
         {
             Name = name;
-            BaseValue = val;
+            Base = val;
         }
         #endregion
 
@@ -32,13 +32,13 @@ namespace Systems.StatSystem
 
         public virtual int Value
         {
-            get { return BaseValue; }
+            get { return Base; }
         }
 
-        public virtual int BaseValue
+        public virtual int Base
         {
-            get { return _statBaseValue; }
-            set { _statBaseValue = value; }
+            get { return _baseValue; }
+            set { _baseValue = value; }
         }
         #endregion
 

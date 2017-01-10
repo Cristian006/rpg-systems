@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Systems.StatSystem
 {
-    public class StatCollection : MonoBehaviour
+    public abstract class StatCollection : MonoBehaviour
     {
         private Dictionary<StatType, Stat> _statDictionary;
 
@@ -86,7 +86,7 @@ namespace Systems.StatSystem
         {
             foreach (var i in GetAllRegeneratingStats)
             {
-                if (i.CurrentValue != i.Value)
+                if (i.Max != i.Value)
                 {
                     if (Time.time > i.TimeForNextRegen)
                     {
@@ -97,10 +97,7 @@ namespace Systems.StatSystem
             }
         }
 
-        protected virtual void ConfigureStats()
-        {
-
-        }
+        protected abstract void ConfigureStats();
 
         //Check for stat in collection
         public bool ContainsStat(StatType statType)

@@ -35,12 +35,12 @@ namespace Systems.StatSystem
         {
             get
             {
-                return base.Value + ModifierValue;
+                return base.Value + Modifier;
             }
         }
 
         //the stats current mod value of added modifiers
-        public int ModifierValue
+        public int Modifier
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Systems.StatSystem
                 }
 
                 //getting the effected mod value and adding it to the total modified value of the stat
-                _statModValue += group.First().ApplyModifier(BaseValue + _statModValue, (sum > max) ? sum : max);
+                _statModValue += group.First().ApplyModifier(Base + _statModValue, (sum > max) ? sum : max);
             }
 
             //Trigger the event that this stats overall value changed

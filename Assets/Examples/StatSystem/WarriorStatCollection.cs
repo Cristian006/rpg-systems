@@ -16,23 +16,23 @@ namespace Systems.StatSystem
             #region ATTRIBUTES
             var stamina = CreateOrGetStat<StatAttribute>(StatType.Stamina);
             stamina.Name = "Stamina";
-            stamina.BaseValue = 2;
+            stamina.Base = 2;
 
             var stength = CreateOrGetStat<StatAttribute>(StatType.Strength);
             stength.Name = "Strength";
-            stength.BaseValue = 5;
+            stength.Base = 5;
 
             var endurance = CreateOrGetStat<StatAttribute>(StatType.Endurance);
             endurance.Name = "Endurance";
-            endurance.BaseValue = 7;
+            endurance.Base = 7;
 
             var agility = CreateOrGetStat<StatAttribute>(StatType.Agility);
             agility.Name = "Agility";
-            agility.BaseValue = 4;
+            agility.Base = 4;
 
             var intellegence = CreateOrGetStat<StatAttribute>(StatType.Intellegence);
             intellegence.Name = "Intellegence";
-            intellegence.BaseValue = 3;
+            intellegence.Base = 3;
             #endregion
 
             #region STATS
@@ -41,7 +41,7 @@ namespace Systems.StatSystem
             */
             var health = CreateOrGetStat<StatRegeneratable>(StatType.Health);
             health.Name = "Health";
-            health.BaseValue = 125;
+            health.Base = 125;
             health.BaseSecondsPerPoint = 100;
             //Stamina = 10; and our ratio is 10; 10*10 = 0; health = 100; health + Stamina = 200
             health.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Stamina), 10f)); // health should be 200
@@ -55,7 +55,7 @@ namespace Systems.StatSystem
             */
             var magic = CreateOrGetStat<StatRegeneratable>(StatType.Magic);
             magic.Name = "Magic";
-            magic.BaseValue = 10;
+            magic.Base = 10;
             magic.BaseSecondsPerPoint = 10;
             magic.RestoreCurrentValueToMax();
 
@@ -64,7 +64,7 @@ namespace Systems.StatSystem
             */
             var mana = CreateOrGetStat<StatRegeneratable>(StatType.Mana);
             mana.Name = "Mana";
-            mana.BaseValue = 100;
+            mana.Base = 100;
             mana.BaseSecondsPerPoint = 10;
             mana.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Intellegence), 50f));
             mana.UpdateLinkers();
@@ -75,7 +75,7 @@ namespace Systems.StatSystem
             */
             var armor = CreateOrGetStat<StatVital>(StatType.Armor);
             armor.Name = "Armor";
-            armor.BaseValue = 25;
+            armor.Base = 25;
             armor.RestoreCurrentValueToMax();
 
             /*
@@ -83,14 +83,14 @@ namespace Systems.StatSystem
             */
             var armorProtection = CreateOrGetStat<StatAttribute>(StatType.ArmorProtection);
             armorProtection.Name = "ArmorProtection";
-            armorProtection.BaseValue = 30;
+            armorProtection.Base = 30;
 
             /*
             How quickly the entity moves in the scene
             */
             var speed = CreateOrGetStat<StatVital>(StatType.Speed);
             speed.Name = "Speed";
-            speed.BaseValue = 1;
+            speed.Base = 1;
             speed.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Agility), 0.01f));
             speed.RestoreCurrentValueToMax();
 
@@ -99,7 +99,7 @@ namespace Systems.StatSystem
             */
             var inventory = CreateOrGetStat<StatVital>(StatType.InventoryCap);
             inventory.Name = "Inventory";
-            inventory.BaseValue = 6;
+            inventory.Base = 6;
             inventory.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Strength), 1f));
             inventory.UpdateLinkers();
             #endregion
@@ -115,7 +115,7 @@ namespace Systems.StatSystem
         {
             foreach (var i in GetAllRegeneratingStats)
             {
-                if (i.CurrentValue != i.Value)
+                if (i.Max != i.Value)
                 {
                     if (Time.time > i.TimeForNextRegen)
                     {
