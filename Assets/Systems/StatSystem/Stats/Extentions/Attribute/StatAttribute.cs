@@ -50,7 +50,7 @@ namespace Systems.StatSystem
             }
         }
 
-        public List<StatLinker> StatLinkers
+        public List<StatLinker> Linkers
         {
             get { return _statLinkers; }
         }

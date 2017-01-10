@@ -28,6 +28,11 @@ namespace Systems.StatSystem
         #endregion
 
         #region Properties - Getters/Setters
+        public int Max
+        {
+            get { return base.Value; }
+        }
+
         new public int Value
         {
             get

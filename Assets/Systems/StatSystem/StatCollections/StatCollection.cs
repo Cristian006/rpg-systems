@@ -323,7 +323,7 @@ namespace Systems.StatSystem
             foreach (var key in StatDict.Keys)
             {
                 var stat = this[key];
-                i += stat.StatName + ": " + stat.Value + "\n";
+                i += stat.Name + ": " + stat.Value + "\n";
             }
             return i;
         }

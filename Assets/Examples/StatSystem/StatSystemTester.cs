@@ -41,12 +41,12 @@ namespace Systems.Example
 
         public void AddInventory()
         {
-            entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue += Random.Range(1, 5);
+            entity.Stats.GetStat<StatVital>(StatType.InventoryCap).Value += Random.Range(1, 5);
         }
 
         public void RemoveFromInventory()
         {
-            entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue -= Random.Range(1, 5);
+            entity.Stats.GetStat<StatVital>(StatType.InventoryCap).Value -= Random.Range(1, 5);
         }
 
         public void ReceiveExp()
@@ -54,14 +54,9 @@ namespace Systems.Example
             entity.Level.ModifyExp(Random.Range(75, 100));
         }
 
-        public void RemoveExp()
-        {
-            entity.Level.ModifyExp(Random.Range(-100, -50));
-        }
-
         public void UseMagic()
         {
-            entity.Stats.GetStat<StatVital>(StatType.Magic).StatCurrentValue -= Random.Range(10, 15);
+            entity.Stats.GetStat<StatVital>(StatType.Magic).Value -= Random.Range(10, 15);
         }
 
         public void AddModifier()

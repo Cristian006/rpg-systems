@@ -130,7 +130,7 @@ namespace Systems.StatSystem
         {
             Linker = 0;
 
-            foreach (StatLinker link in StatLinkers)
+            foreach (StatLinker link in Linkers)
             {
                 if (link.SecondaryStatLinker)
                 {

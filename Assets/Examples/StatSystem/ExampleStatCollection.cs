@@ -15,24 +15,24 @@ namespace Systems.StatSystem
         {
             #region ATTRIBUTES
             var stamina = CreateOrGetStat<StatAttribute>(StatType.Stamina);
-            stamina.StatName = "Stamina";
-            stamina.StatBaseValue = 0;
+            stamina.Name = "Stamina";
+            stamina.Base = 0;
 
             var stength = CreateOrGetStat<StatAttribute>(StatType.Strength);
-            stength.StatName = "Strength";
-            stength.StatBaseValue = 5;
+            stength.Name = "Strength";
+            stength.Base = 5;
 
             var endurance = CreateOrGetStat<StatAttribute>(StatType.Endurance);
-            endurance.StatName = "Endurance";
-            endurance.StatBaseValue = 6;
+            endurance.Name = "Endurance";
+            endurance.Base = 6;
 
             var agility = CreateOrGetStat<StatAttribute>(StatType.Agility);
-            agility.StatName = "Agility";
-            agility.StatBaseValue = 6;
+            agility.Name = "Agility";
+            agility.Base = 6;
 
             var intellegence = CreateOrGetStat<StatAttribute>(StatType.Intellegence);
-            intellegence.StatName = "Intellegence";
-            intellegence.StatBaseValue = 0;
+            intellegence.Name = "Intellegence";
+            intellegence.Base = 0;
             #endregion
 
             #region STATS
@@ -40,8 +40,8 @@ namespace Systems.StatSystem
             The amount of health the entity has available
             */
             var health = CreateOrGetStat<StatRegeneratable>(StatType.Health);
-            health.StatName = "Health";
-            health.StatBaseValue = 100;
+            health.Name = "Health";
+            health.Base = 100;
             health.BaseSecondsPerPoint = 100;
             //Stamina = 10; and our ratio is 10; 10*10 = 0; health = 100; health + Stamina = 200
             health.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Stamina), 10f)); // health should be 200
@@ -54,8 +54,8 @@ namespace Systems.StatSystem
             The amount of magic the entity can use
             */
             var magic = CreateOrGetStat<StatRegeneratable>(StatType.Magic);
-            magic.StatName = "Magic";
-            magic.StatBaseValue = 10;
+            magic.Name = "Magic";
+            magic.Base = 10;
             magic.BaseSecondsPerPoint = 10;
             magic.RestoreCurrentValueToMax();
 
@@ -63,8 +63,8 @@ namespace Systems.StatSystem
             The amount of mana the entity can use
             */
             var mana = CreateOrGetStat<StatRegeneratable>(StatType.Mana);
-            mana.StatName = "Mana";
-            mana.StatBaseValue = 100;
+            mana.Name = "Mana";
+            mana.Base = 100;
             mana.BaseSecondsPerPoint = 10;
             mana.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Intellegence), 50f));
             mana.UpdateLinkers();
@@ -74,23 +74,23 @@ namespace Systems.StatSystem
             How much armor the entity has
             */
             var armor = CreateOrGetStat<StatVital>(StatType.Armor);
-            armor.StatName = "Armor";
-            armor.StatBaseValue = 50;
+            armor.Name = "Armor";
+            armor.Base = 50;
             armor.RestoreCurrentValueToMax();
 
             /*
             How much protection the armor gives the entity - percentage of the hit
             */
             var armorProtection = CreateOrGetStat<StatAttribute>(StatType.ArmorProtection);
-            armorProtection.StatName = "ArmorProtection";
-            armorProtection.StatBaseValue = 50;
+            armorProtection.Name = "ArmorProtection";
+            armorProtection.Base = 50;
 
             /*
             How quickly the entity moves in the scene
             */
             var speed = CreateOrGetStat<StatVital>(StatType.Speed);
-            speed.StatName = "Speed";
-            speed.StatBaseValue = 1;
+            speed.Name = "Speed";
+            speed.Base = 1;
             speed.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Agility), 0.01f));
             speed.RestoreCurrentValueToMax();
 
@@ -98,8 +98,8 @@ namespace Systems.StatSystem
             The amount of Items the entity can carry with
             */
             var inventory = CreateOrGetStat<StatVital>(StatType.InventoryCap);
-            inventory.StatName = "Inventory";
-            inventory.StatBaseValue = 5;
+            inventory.Name = "Inventory";
+            inventory.Base = 5;
             inventory.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Strength), 1f));
             inventory.UpdateLinkers();
             #endregion
