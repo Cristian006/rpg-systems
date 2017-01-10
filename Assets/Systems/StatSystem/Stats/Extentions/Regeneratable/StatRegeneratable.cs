@@ -121,14 +121,14 @@ namespace Systems.StatSystem
         //regenerate the point
         public void Regenerate()
         {
-            StatCurrentValue++;
+            Value++;
             //bug.Log("REGENERATING " + StatName + ": " + StatCurrentValue);
         }
 
         //overriding the update linker function to work with the secondary stat linkers
         public override void UpdateLinkers()
         {
-            StatLinkerValue = 0;
+            Linker = 0;
 
             foreach (StatLinker link in StatLinkers)
             {
@@ -139,7 +139,7 @@ namespace Systems.StatSystem
                 }
                 else
                 {
-                    StatLinkerValue += link.Value;
+                    Linker += link.Value;
                 }
             }
 
