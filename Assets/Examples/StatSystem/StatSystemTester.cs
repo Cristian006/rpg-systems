@@ -40,12 +40,12 @@ public class StatSystemTester : MonoBehaviour
 
     public void AddInventory()
     {
-        entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue += Random.Range(1, 5);
+        entity.Stats.GetStat<StatVital>(StatType.InventoryCap).CurrentValue += Random.Range(1, 5);
     }
 
     public void RemoveFromInventory()
     {
-        entity.Stats.GetStat<StatVital>(StatType.InventoryCap).StatCurrentValue -= Random.Range(1, 5);
+        entity.Stats.GetStat<StatVital>(StatType.InventoryCap).CurrentValue -= Random.Range(1, 5);
     }
 
     public void ReceiveExp()
@@ -60,7 +60,7 @@ public class StatSystemTester : MonoBehaviour
 
     public void UseMagic()
     {
-        entity.Stats.GetStat<StatVital>(StatType.Magic).StatCurrentValue -= Random.Range(10, 15);
+        entity.Stats.GetStat<StatVital>(StatType.Magic).CurrentValue -= Random.Range(10, 15);
     }
 
     public void AddModifier()

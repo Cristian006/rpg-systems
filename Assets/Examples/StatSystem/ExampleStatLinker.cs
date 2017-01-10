@@ -37,7 +37,7 @@ namespace Systems.StatSystem
             get
             {
                 //The attributes value * the given ratio which is later added to the linked stat's base value
-                return (int)(StatThatsLinking.StatValue * _ratio);
+                return (int)(StatThatsLinking.Value * _ratio);
             }
         }
 

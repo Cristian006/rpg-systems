@@ -106,10 +106,45 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.Label("Player Type", GUILayout.Width(80));
                         asset.PType = (PlayerType)EditorGUILayout.EnumPopup(asset.PType);
                         GUILayout.EndHorizontal();
-                        
-                        GUILayout.EndVertical();  //d
 
+                        GUILayout.Space(10);
+
+                        GUILayout.BeginVertical("Box");
+
+                        GUILayout.Label(string.Format("Defualt Inventory: Contains {0} Item(s)", asset.DefualtInventory.Count));
+
+                        GUILayout.Space(2);
+
+                        for (int d = 0; d < asset.DefualtInventory.Count; d++)
+                        {
+                            GUILayout.BeginHorizontal(EditorStyles.helpBox);
+                            GUILayout.Label(string.Format("Default Item {0}:", d.ToString("D2"), GUILayout.Width(60)));
+                            asset.DefualtInventory[d] = EditorGUILayout.TextField(asset.DefualtInventory[d], GUILayout.MinWidth(350));
+                            GUILayout.FlexibleSpace();
+                            if (GUILayout.Button("x", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Item", "Are you sure you want to delete " + asset.DefualtInventory[d] + " Item?", "Delete", "Cancel"))
+                            {
+                                asset.DefualtInventory.RemoveAt(d);
+                            }
+
+                            GUILayout.EndHorizontal();
+                        }
+                        GUILayout.EndVertical();
+
+                        GUILayout.Space(20);
+
+                        
+
+
+                        GUILayout.EndVertical();  //d
                         GUILayout.EndHorizontal();  //b
+
+                        GUILayout.BeginHorizontal();
+                        if (GUILayout.Button("Add Defualt Item to Inventory", EditorStyles.toolbarButton))
+                        {
+                            asset.DefualtInventory.Add("");
+                        }
+                        GUILayout.EndHorizontal();
+
                         GUILayout.EndVertical();  //a
 
                         
