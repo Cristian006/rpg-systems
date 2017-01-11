@@ -1,17 +1,11 @@
 # RPGSystems
 
-A work in progress.. A collection of modular and extensible systems commonly found in RPG like games.
+### For use with the [Unity Game Engine](https://unity3d.com)
 
-### Systems
+_**Notice:** This is a work in progress..._
 
-| Name | Description |
-| :--- | :---------- |
-| [StatSystem][1] | This system handles what makes up a working stat collection in game for any object needing a set of stats. |
-| [ItemSystem][2] | |
-| [InventorySystem][3] | |
-| [EntitySystem][4] | |
+A collection of modular and extensible systems commonly found in RPG like games.
 
-[1]: Assets/Systems/StatSystem/StatSystem.md
-[2]: Assets/Systems/ItemSystem/ItemSystem.md
-[3]: Assets/Systems/InventorySystem/InventorySystem.md
-[4]: Assets/Systems/EntitySystem/EntitySystem.md
+### Documentation
+
+Go to the project [wiki](https://github.com/Cristian006/RPGSystems/wiki) for documentation
