@@ -116,7 +116,7 @@ public class StatSystemUI : MonoBehaviour {
         stamina.text.text = string.Format("STMNA {0} / {1} / {2}",
                     entity.Stats.GetStat<StatAttribute>(StatType.Stamina).Value,
                     entity.Stats.GetStat<StatAttribute>(StatType.Stamina).Base,
-                    entity.Stats.GetStat<StatAttribute>(StatType.Stamina).LevelValue);
+                    entity.Stats.GetStat<StatAttribute>(StatType.Stamina).Level);
 
         strength.text.text = string.Format("STRNGTH {0} / {1} / {2}",
                     entity.Stats.GetStat<StatAttribute>(StatType.Strength).Value,
@@ -150,7 +150,7 @@ public class StatSystemUI : MonoBehaviour {
                 if(s != null)
                 {
                     b += string.Format("<b>{0}</b>\nRegen Amount: {1:F}+ per sec.\nMaxValue: {2}\nBase Value: {3}\nCurrent Value: {4}\nLevel Value: {5}\nLinker Value: {6}\nEffected By:",
-                        s.Name, s.RegenAmount, s.Max, s.Base, s.Value, s.LevelValue, s.LinkerValue);
+                        s.Name, s.RegenAmount, s.Max, s.Base, s.Value, s.Level, s.Level);
 
                     for(int z = 0; z < s.Linkers.Count; z++)
                     {
@@ -163,7 +163,7 @@ public class StatSystemUI : MonoBehaviour {
                     var j = entity.Stats.GetStat<StatVital>(i);
                     if (j != null)
                     {
-                        b += string.Format("<b>{0}</b>\nMaxValue: {1}\nBase Value: {2}\nCurrent Value: {3}\nLinker Value: {4}\nEffected By: ", j.Name, j.Max, j.Base, j.Value, j.LinkerValue);
+                        b += string.Format("<b>{0}</b>\nMaxValue: {1}\nBase Value: {2}\nCurrent Value: {3}\nLinker Value: {4}\nEffected By: ", j.Name, j.Max, j.Base, j.Value, j.Linker);
                         for (int z = 0; z < j.Linkers.Count; z++)
                         {
                             ExampleStatLinker m = (ExampleStatLinker)j.Linkers[z];

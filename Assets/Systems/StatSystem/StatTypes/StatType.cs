@@ -6,15 +6,20 @@
 /// </summary>
 namespace Systems.StatSystem
 {
-	public enum StatType
-	{
-		None = 0,
-		Health = 1,
-		AttackDice = 2,
-		AttackBase = 3,
-		DefenseDice = 4,
-		DefenceBase = 5,
-		Move = 6,
-		Range = 7
-	}
+    public enum StatType
+    {
+        None = 0,
+        Health = 1,
+        Magic = 2,
+        Stamina = 3,
+        Armor = 4,
+        Mana = 5,
+        Speed = 6,
+        InventoryCap = 7,
+        Intellegence = 8,
+        Strength = 9,
+        Endurance = 10,
+        Agility = 11,
+        ArmorProtection = 12
+    }
 }

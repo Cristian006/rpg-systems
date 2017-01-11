@@ -442,7 +442,10 @@ namespace Systems.ItemSystem.Editor
 
         public void About()
         {
-            EditorGUILayout.LabelField("This is an Item Editor to create the three different types of items and save them to there corresponding asset databases using scriptable objects.");
+            GUILayout.BeginVertical();
+            EditorGUILayout.HelpBox("This is an Item Editor to create the three different types of items and save them to there corresponding asset databases using scriptable objects.", MessageType.Info);
+            GUILayout.FlexibleSpace();
+            GUILayout.EndVertical();
         }
     }
 }
