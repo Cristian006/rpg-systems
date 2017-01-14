@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using Systems.ItemSystem;
-using Systems.EntitySystem;
 
 //TODO: Event handlers for weapon change
 namespace Systems.InventorySystem

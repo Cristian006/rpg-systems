@@ -28,17 +28,5 @@ namespace Systems.Example
                return MyEntity.Stats.GetStat<StatVital>(StatType.InventoryCap).Max;
             }
         }
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
