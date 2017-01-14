@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Systems.StatSystem;
 
-namespace Systems.StatSystem
+namespace Systems.Example
 {
     /// <summary>
     /// Example Stat Collection
@@ -9,7 +10,7 @@ namespace Systems.StatSystem
     ///     then in the configure stats part - define what kind of base stats and linked attributes
     ///     a warrior would have
     /// </summary>
-    public class ExampleStatCollection : StatCollection
+    public class AssassinStatCollection : StatSystem.StatCollection
     {
         protected override void ConfigureStats()
         {
@@ -44,9 +45,9 @@ namespace Systems.StatSystem
             health.Base = 100;
             health.BaseSecondsPerPoint = 100;
             //Stamina = 10; and our ratio is 10; 10*10 = 0; health = 100; health + Stamina = 200
-            health.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Stamina), 10f)); // health should be 200
+            health.AddLinker(new StatLinker(CreateOrGetStat<StatAttribute>(StatType.Stamina), 10f)); // health should be 200
                                                                                                           //Endurance = 8; and our ratio is 1; 1*8= 8; health.SecondsPerPoint = 1; health.SecondsPerPoint - Endurance = 8
-            health.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Endurance), 5f, true));
+            health.AddLinker(new StatLinker(CreateOrGetStat<StatAttribute>(StatType.Endurance), 5f, true));
             health.UpdateLinkers();
             health.RestoreCurrentValueToMax();
 
@@ -66,7 +67,7 @@ namespace Systems.StatSystem
             mana.Name = "Mana";
             mana.Base = 100;
             mana.BaseSecondsPerPoint = 10;
-            mana.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Intellegence), 50f));
+            mana.AddLinker(new StatLinker(CreateOrGetStat<StatAttribute>(StatType.Intellegence), 50f));
             mana.UpdateLinkers();
             mana.RestoreCurrentValueToMax();
 
@@ -91,7 +92,7 @@ namespace Systems.StatSystem
             var speed = CreateOrGetStat<StatVital>(StatType.Speed);
             speed.Name = "Speed";
             speed.Base = 1;
-            speed.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Agility), 0.01f));
+            speed.AddLinker(new StatLinker(CreateOrGetStat<StatAttribute>(StatType.Agility), 0.01f));
             speed.RestoreCurrentValueToMax();
 
             /*
@@ -100,7 +101,7 @@ namespace Systems.StatSystem
             var inventory = CreateOrGetStat<StatVital>(StatType.InventoryCap);
             inventory.Name = "Inventory";
             inventory.Base = 5;
-            inventory.AddLinker(new ExampleStatLinker(CreateOrGetStat<StatAttribute>(StatType.Strength), 1f));
+            inventory.AddLinker(new StatLinker(CreateOrGetStat<StatAttribute>(StatType.Strength), 1f));
             inventory.UpdateLinkers();
             #endregion
         }

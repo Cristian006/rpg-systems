@@ -4,24 +4,27 @@ using System.Collections.Generic;
 using Systems.EntitySystem;
 using Systems.StatSystem;
 
-public class CharacterSelectionManager : MonoBehaviour
+namespace Systems.Example
 {
-    public GameObject cPanel;
-    public GameObject parent;
-
-    void Start()
+    public class CharacterSelectionManager : MonoBehaviour
     {
-        Init();
-    }
+        public GameObject cPanel;
+        public GameObject parent;
 
-    void Init()
-    {
-        GameObject temp;
-        for(int i = 0; i < EntityDatabase.Instance.Count; i++)
+        void Start()
         {
-            temp = Instantiate(cPanel);
-            temp.transform.SetParent(parent.transform);
-            temp.GetComponent<CharacterPanel>().myEntity.Data = EntityDatabase.GetDataFromAsset(EntityDatabase.Instance.GetAtIndex(i));
+            Init();
+        }
+
+        void Init()
+        {
+            GameObject temp;
+            for (int i = 0; i < EntityDatabase.Instance.Count; i++)
+            {
+                temp = Instantiate(cPanel);
+                temp.transform.SetParent(parent.transform);
+                temp.GetComponent<CharacterPanel>().myEntity.Data = EntityDatabase.GetDataFromAsset(EntityDatabase.Instance.GetAtIndex(i));
+            }
         }
     }
 }

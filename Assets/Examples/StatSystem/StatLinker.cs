@@ -1,27 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
+using Systems.StatSystem;
 
-namespace Systems.StatSystem
+namespace Systems.Example
 {
     //example Linker
     //Basic StatLinker
-    public class ExampleStatLinker : StatLinker
+    public class StatLinker : StatSystem.StatLinker
     {
         private float _ratio;
 
         #region Constructors
-        public ExampleStatLinker() : base()
+        public StatLinker() : base()
         {
             //empty constructor
             _ratio = 0;
         }
-        public ExampleStatLinker(Stat stat, float ratio) : base(stat)
+        public StatLinker(Stat stat, float ratio) : base(stat)
         {
             _ratio = ratio;
         }
 
-        public ExampleStatLinker(Stat stat, float ratio, bool secondary) : base(stat, secondary)
+        public StatLinker(Stat stat, float ratio, bool secondary) : base(stat, secondary)
         {
             _ratio = ratio;
         }

@@ -9,8 +9,6 @@ namespace Systems.InventorySystem
     public abstract class InventoryManager : MonoBehaviour
     {
         [SerializeField]
-        private Entity entity;
-        [SerializeField]
         private Inventory _inventory;
 
         public EventHandler OnPrimaryChange;
@@ -44,18 +42,6 @@ namespace Systems.InventorySystem
             set
             {
                 _inventory = value;
-            }
-        }
-
-        public Entity MyEntity
-        {
-            get
-            {
-                if (entity == null)
-                {
-                    entity = GetComponent<Entity>();
-                }
-                return entity;
             }
         }
 
