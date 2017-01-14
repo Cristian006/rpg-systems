@@ -51,7 +51,7 @@ namespace Systems.EntitySystem
 
                 return stats;
             }
-            set { stats = value; }
+            protected set { stats = value; }
         }
 
         public Target target
@@ -100,7 +100,7 @@ namespace Systems.EntitySystem
 
         protected T GetStat<T>(StatType type) where T : Stat
         {
-            return stats.GetStat<T>(type);
+            return Stats.GetStat<T>(type);
         }
 
         //require children to initialize
